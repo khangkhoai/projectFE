@@ -18,19 +18,19 @@
       alt="CoreUI Logo"
     />
     <CHeaderNav class="d-md-down-none mr-auto">
-      <CHeaderNavItem class="px-3">
-        <CHeaderNavLink to="/dashboard">
-          Dashboard
-        </CHeaderNavLink>
-      </CHeaderNavItem>
+      <!-- <CHeaderNavItem class="px-3"> -->
+        <!-- <CHeaderNavLink to="/dashboard"> -->
+          <!-- Dashboard -->
+        <!-- </CHeaderNavLink> -->
+      <!-- </CHeaderNavItem> -->
       <CHeaderNavItem class="px-3">
         <CHeaderNavLink to="/users" exact>
-          Users
+          <!-- Users -->
         </CHeaderNavLink>
       </CHeaderNavItem>
       <CHeaderNavItem class="px-3">
         <CHeaderNavLink>
-          Settings
+          <!-- Settings -->
         </CHeaderNavLink>
       </CHeaderNavItem>
     </CHeaderNav>
@@ -52,9 +52,9 @@
       </CHeaderNavItem>
       <TheHeaderDropdownAccnt />
     </CHeaderNav>
-    <CSubheader class="px-3">
+    <!-- <CSubheader class="px-3">
       <CBreadcrumbRouter class="border-0" />
-    </CSubheader>
+    </CSubheader> -->
   </CHeader>
 </template>
 
