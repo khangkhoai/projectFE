@@ -471,16 +471,12 @@
 </template>
 
 <script>
-import MainChartExample from './charts/MainChartExample'
-import WidgetsDropdown from './widgets/WidgetsDropdown'
-import WidgetsBrand from './widgets/WidgetsBrand'
+// import WidgetsDropdown from './widgets/WidgetsDropdown'
 
 export default {
   name: 'Dashboard',
   components: {
-    MainChartExample,
-    WidgetsDropdown,
-    WidgetsBrand
+    // WidgetsDropdown,
   },
   data () {
     return {
