@@ -1,7 +1,7 @@
 <template>
   <div>
-    <WidgetsDropdown />
-    <CCard>
+    <!-- <WidgetsDropdown /> -->
+    <!-- <CCard>
       <CCardBody>
         <CRow>
           <CCol sm="5">
@@ -95,10 +95,10 @@
           </CCol>
         </CRow>
       </CCardFooter>
-    </CCard>
-    <WidgetsBrand />
-    <CRow>
-      <CCol md="12">
+    </CCard> -->
+    <!-- <WidgetsBrand /> -->
+    <!-- <CRow> -->
+      <!-- <CCol md="12">
         <CCard>
           <CCardHeader>
             Traffic &amp; Sales
@@ -464,8 +464,9 @@
             </CDataTable>
           </CCardBody>
         </CCard>
-      </CCol>
-    </CRow>
+      </CCol> -->
+    <!-- </CRow> -->
+    <h1 class="text-center mt-5">HELLO!!!!</h1>
   </div>
 </template>
 
