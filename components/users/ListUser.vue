@@ -1,6 +1,8 @@
 <template>
    <div>
-    cong
+    <table>
+
+    </table>
   </div>
 </template>
 <script>

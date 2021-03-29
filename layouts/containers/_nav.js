@@ -5,15 +5,18 @@ export default [{
             name: 'Home',
             to: '/dashboard',
             icon: 'cil-speedometer',
-            badge: {
-                // color: 'primary',
-                // text: 'NEW'
-            }
+
+        },
+        {
+            _name: 'CSidebarNavItem',
+            name: 'Project',
+            to: '/project',
+            icon: 'cil-drop'
         },
         {
             _name: 'CSidebarNavItem',
             name: 'Task',
-            to: '/base/tables',
+            to: '/task',
             icon: 'cil-drop'
         },
 
