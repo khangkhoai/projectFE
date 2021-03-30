@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <CreateEditProject/>
+    <CreateEditProject :title="title"/>
   </div>
 </template>
 <script>
@@ -8,6 +8,11 @@ import CreateEditProject from "@/components/project/CreateEditProject"
 export default {
   components:{
     CreateEditProject
+  },
+   data(){
+    return{
+      title: "Edit Project"
+    }
   }
 }
 </script>

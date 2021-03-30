@@ -25,12 +25,13 @@ export default {
   props: {
     dataUser: {
       type: Array,
-      default: ()=>[]
+      default: () => [],
     },
     fields: {
       type: Array,
-      default: ()=>[]
-    }
-  }
+      default: () => [],
+    },
+  },
 };
 </script>
+

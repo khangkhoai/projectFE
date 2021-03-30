@@ -21,6 +21,8 @@ export default {
     return {
         ShowAdd: false,
         showEdit: true,
+       
+       
         dataRole : {
             'id' : '',
             'name' : ''
@@ -55,4 +57,5 @@ export default {
 }
 </script>
 <style scoped>
+
 </style>
