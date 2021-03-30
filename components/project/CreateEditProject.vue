@@ -2,7 +2,7 @@
   <div>
     <CCard>
       <CCardHeader >
-        <h3>Add Project</h3>
+        <h3>{{title}}</h3>
       </CCardHeader>
       <CCardBody>
         <CRow>
@@ -66,6 +66,9 @@ export default {
       },
       errors: [],
     };
+  },
+  props:{
+    title:"",
   },
   mounted() {
     if (this.$route.params.id != null) {

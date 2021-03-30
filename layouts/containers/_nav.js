@@ -13,6 +13,7 @@ export default [{
             to: '/project',
             icon: 'cil-drop'
         },
+
         {
             _name: 'CSidebarNavItem',
             name: 'Task',
