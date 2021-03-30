@@ -1,19 +1,6 @@
 <template>
   <div>
-    <CCard>
-      <CCardHeader>
-        <h3>List Task</h3>
-      </CCardHeader>
-      <CCardBody>
-        <CDataTable
-          :items="dataUser"
-          :fields="fields"
-          hover
-          sorter
-        >
-        </CDataTable>
-      </CCardBody>
-    </CCard>
+    <CDataTable :items="dataUser" :fields="fields" hover sorter> </CDataTable>
   </div>
 </template>
 <script>
@@ -22,12 +9,13 @@ export default {
   props: {
     dataUser: {
       type: Array,
-      default: ()=>[]
+      default: () => [],
     },
     fields: {
       type: Array,
-      default: ()=>[]
-    }
-  }
+      default: () => [],
+    },
+  },
 };
 </script>
+
