@@ -2,7 +2,7 @@
   <div>
     <CCard>
       <CCardHeader >
-        <h3>Add User</h3>
+        <h3>{{title}}</h3>
       </CCardHeader>
       <CCardBody>
         <CRow>
@@ -55,7 +55,7 @@
         >
           Submit
         </CButton>
-        <CButton v-else color="primary" class="btn-click" @click="updateProject(form.id)" >
+        <CButton v-else color="primary" class="btn-click" @click="updateUser()" >
           Update
         </CButton>
 
@@ -79,13 +79,13 @@ export default {
         role_id: "",
       },
       errors: [],
+      title: "Add User"
     };
   },
-  mounted() {
-    this.addUser();
-    
-  },
   methods: {
+    /**
+     * 
+     */
     addUser() {
       this.validate();
       if (this.errors.length > 0) {
@@ -122,8 +122,23 @@ export default {
       if (this.form.email == "") {
         this.errors.push("Email không được trống");
       }
-
     },
+
+    updateUser(id){
+      alert('123');
+    },
+
+    getDataUser(id){
+      axios.get(' http://127.0.0.1:8000/api/user/'+id).then(res=>{
+        this.form = res.data.user;
+      })
+    }
+  },
+  mounted(){
+    if(this.$route.params.id){
+      this.title = "Edit User";
+      this.getDataUser(this.$route.params.id);
+    }
   }
 }
 </script>
