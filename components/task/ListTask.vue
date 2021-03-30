@@ -6,7 +6,9 @@
       </CCardHeader>
       <CCardBody>
         <CButton color="primary" class="m-2 btn_add">
-          <nuxt-link to="/task/add" class="text-white d-block"> + Add</nuxt-link>
+          <nuxt-link to="/task/add" class="text-white d-block">
+            + Add</nuxt-link
+          >
         </CButton>
 
         <CDataTable
@@ -15,9 +17,19 @@
           items-per-page-select
           :items-per-page="5"
           hover
-          sorter
+
           pagination
         >
+         <template #member_id="{ item }">
+            <td>
+              {{ item.member.name}}
+            </td>
+          </template>
+          <template #id_project="{ item }">
+            <td>
+              {{ item.project.name}}
+            </td>
+          </template>
           <template #method="{ item }">
             <td class="py-2">
               <CButton color="success">
@@ -25,7 +37,7 @@
                   <CIcon :content="$options.freeSet.cilPencil" />
                 </nuxt-link>
               </CButton>
-              <CButton color="danger" @click="deleteProject(item.id)">
+              <CButton color="danger" @click="deleteTask(item.id)">
                 <CIcon :content="$options.freeSet.cilTrash" />
               </CButton>
             </td>
@@ -41,18 +53,18 @@ import { freeSet } from "@coreui/icons";
 import swal from "sweetalert2";
 
 const fields = [
-  { key: "id", label: "#", },
-  { key: "subject", label: "Name", },
-  { key: "id_project", label: "Project", },
+  { key: "id", label: "#" },
+  { key: "subject", label: "Name" },
+  { key: "id_project", label: "Project" },
 
-  { key: "content", label: "Content",},
-   { key: "member_id", label: "Assignee",},
-   { key: "status", label: "Status",},
-  { key: "start_date", label: "Start Date",},
+  { key: "content", label: "Content" },
+  { key: "member_id", label: "Assignee" },
+  { key: "status", label: "Status" },
+  { key: "start_date", label: "Start Date" },
 
-   { key: "due_date", label: "Due Date",},
+  { key: "due_date", label: "Due Date" },
 
-  { key: "method", label: "Method",},
+  { key: "method", label: "Method" },
 ];
 
 export default {
@@ -86,11 +98,9 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios
-              .delete("http://localhost:8000/api/task/" + id)
-              .then((res) => {
-                this.$emit("getListTasks", this.dataTasks);
-              });
+            axios.delete("http://localhost:8000/api/task/" + id).then((res) => {
+              this.$emit("getListTasks", this.dataTasks);
+            });
             swal.fire("Deleted!", "Your file has been deleted.", "success");
           }
         });
@@ -99,12 +109,12 @@ export default {
 };
 </script>
 <style>
-.btn_add{
+.btn_add {
   width: 100px;
   position: absolute;
   top: 20px;
 }
-.card-body{
+.card-body {
   position: relative;
 }
 </style>
