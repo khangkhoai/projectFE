@@ -20,6 +20,7 @@
         "@coreui/vue-chartjs": "^1.0.2",
         "@nuxtjs/auth": "^4.9.1",
         "@nuxtjs/axios": "^5.13.1",
+        "laravel-vue-pagination": "^2.3.1",
         "bootstrap": "^4.6.0",
         "bootstrap-vue": "^2.21.2",
         "laravel-vue-pagination": "^2.3.1",

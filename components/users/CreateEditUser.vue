@@ -2,30 +2,42 @@
   <div>
     <CCard>
       <CCardHeader >
-        <h3>{{title}}</h3>
+        <h3>Add User</h3>
       </CCardHeader>
       <CCardBody>
         <CRow>
           <CCol sm="12">
             <CInput
               label="Name"
-              placeholder="Enter project name"
+              placeholder="Enter your name"
               v-model="form.name"
             />
           </CCol>
         </CRow>
         <CRow>
           <CCol sm="12">
-            <CInput label="Description" placeholder="Description"  v-model="form.desc">
+            <CInput label="Email"   v-model="form.email">
+            </CInput>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol sm="12">
+            <CInput label="Password" type="password"  v-model="form.password">
+            </CInput>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol sm="12">
+            <CInput label="Comfirm-Password" type="password"  v-model="form.comfirm_password">
             </CInput>
           </CCol>
         </CRow>
         <CRow>
           <CCol sm="12">
             <CInput
-              label="Start Date"
-              type="date"
-              v-model="form.start_date"
+              label="Role_Id"
+              type="text"
+              v-model="form.role_id"
             >
             </CInput>
           </CCol>
@@ -39,7 +51,7 @@
       <CCardFooter>
         <CButton
         v-if="!this.$route.params.id"
-         color="primary"  @click="createProject()"
+         color="primary"  @click="addUser()"
         >
           Submit
         </CButton>
@@ -61,33 +73,27 @@ export default {
       form: {
         id: "",
         name: "",
-        desc: "",
-        start_date: "",
+        password : "",
+        comfirm_password:"",
+        email: "",
+        role_id: "",
       },
       errors: [],
     };
   },
-  props:{
-    title:"",
-  },
   mounted() {
-    if (this.$route.params.id != null) {
-      this.getProjectByID(this.$route.params.id);
-    }
+    this.addUser();
+    
   },
   methods: {
-    /**
-     * create blog
-     */
-    createProject() {
+    addUser() {
       this.validate();
       if (this.errors.length > 0) {
         return this.errors;
       } else {
-        axios
-          .post("http://localhost:8000/api/projects", this.form)
+        axios.post('http://127.0.0.1:8000/api/user/',this.form) 
           .then((res) => {
-            this.$router.push("/project");
+            this.$router.push("/user");
             swal.fire({
               position: "center",
               icon: "success",
@@ -98,36 +104,7 @@ export default {
           });
       }
     },
-    /**
-     * get blog by id
-     */
-    getProjectByID(id) {
-      axios
-        .get("http://localhost:8000/api/projects/" + id)
-        .then((res) => (this.form = res.data));
-    },
-    /**
-     * update blog
-     */
-    updateProject(id) {
-      this.validate();
-      if (this.errors.length > 0) {
-        return this.errors;
-      } else {
-        axios
-          .put("http://localhost:8000/api/projects/" + id, this.form)
-          .then((res) => {
-            this.$router.push("/project");
-            swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Successfully Update",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          });
-      }
-    },
+    
     /**
      * check validate
      */
@@ -136,15 +113,19 @@ export default {
       if (this.form.name == "") {
         this.errors.push("Name không được trống");
       }
-      if (this.form.desc == "") {
-        this.errors.push("Description không được trống");
+      if (this.form.password == "") {
+        this.errors.push("Password không được trống");
       }
-      if (this.form.start_date == "") {
-        this.errors.push("Start Date không được trống");
+      if (this.form.password!==this.form.comfirm_password) {
+        this.errors.push("Password không giống");
       }
+      if (this.form.email == "") {
+        this.errors.push("Email không được trống");
+      }
+
     },
-  },
-};
+  }
+}
 </script>
 <style lang="">
 </style>
