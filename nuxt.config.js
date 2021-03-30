@@ -49,7 +49,9 @@ export default {
      */
     modules: [
         // Doc: https://axios.nuxtjs.org/usage
-        '@nuxtjs/axios'
+        '@nuxtjs/axios',
+        'vue-sweetalert2/nuxt',
+        'bootstrap-vue/nuxt'
     ],
     /*
      ** Axios module configuration
