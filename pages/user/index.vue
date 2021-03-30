@@ -28,7 +28,7 @@ import { FIELDS } from "../../constant/constant";
 export default {
   components: {
     ListUser,
-    Search
+    Search,
   },
   data() {
     return {
@@ -36,28 +36,32 @@ export default {
       fields: FIELDS,
       page: {},
       currentPage: 1,
-      search: ''
+      search: "",
     };
   },
   methods: {
-    getUser(e,page) {
-      axios.get("http://localhost:8000/api/all-user?page="+page).then(res => {
-        this.dataUser = res.data.data;
-        this.page = res.data;
-      });
+    getUser(e, page) {
+      axios
+        .get("http://localhost:8000/api/all-user?page=" + page)
+        .then((res) => {
+          this.dataUser = res.data.data;
+          this.page = res.data;
+        });
     },
-    getKeyword(value){
+    getKeyword(value) {
       this.search = value;
-      axios.get("http://localhost:8000/api/search?username="+this.search).then(res => {
-        this.dataUser = res.data;
-        // console.log(res.data);
-        // this.page = res.data;
-      });
-    }
+      axios
+        .get("http://localhost:8000/api/search?username=" + this.search)
+        .then((res) => {
+          this.dataUser = res.data;
+          // console.log(res.data);
+          // this.page = res.data;
+        });
+    },
   },
   mounted() {
     this.getUser();
-  }
+  },
 };
 </script>
 <style lang=""></style>
