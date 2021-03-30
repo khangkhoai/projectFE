@@ -3,6 +3,7 @@
     fixed
     :minimize="minimize"
     :show.sync="show"
+    v-if="$auth.loggedIn"
   >
     <CSidebarBrand
 
