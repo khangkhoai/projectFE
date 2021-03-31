@@ -48,13 +48,21 @@ export default {
     };
   },
   methods: {
+    /**
+     * get role in api
+     */
     getRole(){
       axios.get('http://localhost:8000/api/roles').then(res=>{
         this.dataRole = res.data
         // console.log(this.dataRole);
       });
     },
-  
+
+    /**
+     * get name of role 
+     * @param Interger role_id of data user
+     * @return String role name
+     */
     getRoleName(id){
      return this.dataRole.filter(role =>{return role.id==id}).map(role => {return role.name}).join(',');
     }

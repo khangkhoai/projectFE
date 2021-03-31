@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     /**
-     *
+     * signin user
      */
     addUser() {
       this.validate();
@@ -132,6 +132,10 @@ export default {
       }
     },
 
+    /**
+     * update user login
+     * @param Interger id user login
+     */
     updateUser(id) {
       if (this.errors.length > 0) {
         return this.errors;
@@ -139,7 +143,6 @@ export default {
         axios
           .put("http://127.0.0.1:8000/api/user/" + id, this.form)
           .then((res) => {
-            console.log("sua thanh cong " + id);
             this.$router.push("/");
             swal.fire({
               position: "center",
@@ -152,11 +155,19 @@ export default {
       }
     },
 
+    /**
+     * get data user login
+     * @param Interger id user 
+     */
     getDataUser(id) {
       axios.get("http://127.0.0.1:8000/api/user/" + id).then((res) => {
         this.form = res.data.user;
       });
     },
+
+    /**
+     * get data role in api
+     */
     getDataRole() {
       axios.get("http://127.0.0.1:8000/api/roles").then((res) => {
         this.dataRoles = res.data;
@@ -165,6 +176,11 @@ export default {
   },
   mounted() {
     this.getDataRole();
+
+    /**
+     * check param in url 
+     * if has param call method getDataUser
+     */
     if (this.$route.params.id) {
       this.title = "Edit User";
       this.getDataUser(this.$route.params.id);
