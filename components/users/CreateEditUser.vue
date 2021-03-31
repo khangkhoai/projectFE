@@ -28,7 +28,7 @@
         </CRow>
         <CRow>
           <CCol sm="12">
-            <CInput label="Comfirm-Password" type="password"  v-model="form.comfirm_password">
+            <CInput label="Comfirm-Password" type="password"  v-model="form.password_confirmation">
             </CInput>
           </CCol>
         </CRow>
@@ -55,7 +55,7 @@
         >
           Submit
         </CButton>
-        <CButton v-else color="primary" class="btn-click" @click="updateUser()" >
+        <CButton v-else color="primary" class="btn-click" @click="updateUser(form.id)" >
           Update
         </CButton>
 
@@ -73,25 +73,26 @@ export default {
       form: {
         id: "",
         name: "",
-        password : "",
-        comfirm_password:"",
+        password: "",
+        password_confirmation: "",
         email: "",
         role_id: "",
       },
       errors: [],
-      title: "Add User"
+      title: "Add User",
     };
   },
   methods: {
     /**
-     * 
+     *
      */
     addUser() {
       this.validate();
       if (this.errors.length > 0) {
         return this.errors;
       } else {
-        axios.post('http://127.0.0.1:8000/api/user/',this.form) 
+        axios
+          .post("http://127.0.0.1:8000/api/auth/signup", this.form)
           .then((res) => {
             this.$router.push("/user");
             swal.fire({
@@ -104,7 +105,7 @@ export default {
           });
       }
     },
-    
+
     /**
      * check validate
      */
@@ -116,7 +117,7 @@ export default {
       if (this.form.password == "") {
         this.errors.push("Password không được trống");
       }
-      if (this.form.password!==this.form.comfirm_password) {
+      if (this.form.password !== this.form.password_confirmation) {
         this.errors.push("Password không giống");
       }
       if (this.form.email == "") {
@@ -124,23 +125,39 @@ export default {
       }
     },
 
-    updateUser(id){
-      alert('123');
+    updateUser(id) {
+      if (this.errors.length > 0) {
+        return this.errors;
+      } else {
+        axios
+          .put("http://127.0.0.1:8000/api/user/" + id, this.form)
+          .then((res) => {
+            console.log("sua thanh cong " + id);
+            this.$router.push("/");
+            swal.fire({
+              position: "center",
+              icon: "success",
+              title: "update successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
+      }
     },
 
-    getDataUser(id){
-      axios.get(' http://127.0.0.1:8000/api/user/'+id).then(res=>{
+    getDataUser(id) {
+      axios.get("http://127.0.0.1:8000/api/user/" + id).then((res) => {
         this.form = res.data.user;
-      })
-    }
+      });
+    },
   },
-  mounted(){
-    if(this.$route.params.id){
+  mounted() {
+    if (this.$route.params.id) {
       this.title = "Edit User";
       this.getDataUser(this.$route.params.id);
     }
-  }
-}
+  },
+};
 </script>
 <style lang="">
 </style>

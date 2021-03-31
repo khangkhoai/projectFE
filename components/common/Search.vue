@@ -1,7 +1,7 @@
 <template>
   <CRow>
     <CCol sm="4">
-      <CInput label="Name" placeholder="Enter your name" v-model="keyword" />
+      <CInput placeholder="Enter your name" v-model="keyword" />
     </CCol>
     <CCol sm="4" class="search">
       <CButton color="success" class="m-2 btn-search" @click="search">
@@ -31,6 +31,6 @@ export default {
   padding: 0;
 }
 .btn-search {
-  margin-top: 8% !important;
+  margin-top: 0 !important
 }
 </style>

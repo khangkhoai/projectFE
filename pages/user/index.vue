@@ -1,23 +1,16 @@
 <template lang="">
   <div>
-    <CCard>
-      <CCardHeader>
-        <h3>List User</h3>
-      </CCardHeader>
-      <CCardBody>
-        <search  @sendKeyword="getKeyword"/>
-        <list-user :dataUser="dataUser" :fields="fields" />
-        <b-pagination
-        v-show="page.last_page>1"
-          v-model="currentPage"
-          :total-rows="page.total"
-          :per-page="page.per_page"
-          @page-click="getUser"
-          prev-text="Prev"
-          next-text="Next"
-        ></b-pagination>
-      </CCardBody>
-    </CCard>
+    <search @sendKeyword="getKeyword" />
+    <list-user :dataUser="dataUser" :fields="fields" />
+    <!-- <b-pagination
+      v-show="page.last_page > 1"
+      v-model="currentPage"
+      :total-rows="page.total"
+      :per-page="page.per_page"
+      @page-click="getUser"
+      prev-text="Prev"
+      next-text="Next"
+    ></b-pagination> -->
   </div>
 </template>
 <script>
@@ -41,12 +34,10 @@ export default {
   },
   methods: {
     getUser(e, page) {
-      axios
-        .get("http://localhost:8000/api/all-user?page=" + page)
-        .then((res) => {
-          this.dataUser = res.data.data;
-          this.page = res.data;
-        });
+      axios.get("http://localhost:8000/api/all-user").then((res) => {
+        this.dataUser = res.data;
+        this.page = res.data;
+      });
     },
     getKeyword(value) {
       this.search = value;
