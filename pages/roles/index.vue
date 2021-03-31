@@ -27,7 +27,6 @@
   </div>  
 </template>
 <script>
-
 const fields = [
     { key: 'id', label: 'ID',_style:'min-width:50px' },
     { key: 'name', label: 'RoleName',_style:'min-width:150px' },
@@ -58,6 +57,7 @@ export default {
       collapseDuration: 0,
       page : {},
       currentPage : 1,
+      keySearch : ''
       
     }
   },
@@ -73,19 +73,20 @@ export default {
         this.items.splice((index), 1)
         });
     },
-    searchRole(keySearch){
-      axios({method: 'GET',url: 'http://127.0.0.1:8000/api/roles/'+ keySearch}).then(res =>{this.listRoles = res.data; 
-      }).catch(err => {console.log(err)}) 
+    searchRole(value){
+      this.keySearch=value;
+      console.log(this.keySearch)
+      axios.get("http://localhost:8000/api/roles/search?name="+this.keySearch).then(res => {
+        this.dataUser = res.data;
+       
+      });
     }
   },
   mounted () {
-    this.listData();
-    
-   
+    this.listData();   
   },
 }
 </script>
 
 <style>
-
 </style>
