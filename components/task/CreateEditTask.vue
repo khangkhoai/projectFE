@@ -16,7 +16,6 @@
                 v-for="(item, index) in dataTasks"
                 :key="index"
                 :value="item.id"
-                :disabled="isInterviewer"
               >
                 {{item.name }}
               </option>
@@ -40,42 +39,46 @@
           </CCol>
         </CRow>
 
-        <CRow>
+        <CRow class= "mb-2">
           <CCol sm="4">
-           <!-- <CSelect
-              label="Assignee"
-              :options="PRIORITY"
-              :value.sync="form.member_id"
-            /> -->
-
             <label for="source">Assignee</label>
                <select id="id_project" v-model="form.member_id" class="form-control">
 
               <option
-                v-for="(item, index) in dataTasks"
+                v-for="(item, index) in dataUsers"
                 :key="index"
                 :value="item.id"
-                :disabled="isInterviewer"
               >
-                {{item.name }}
+                {{ item.name }}
               </option>
             </select>
           </CCol>
           <CCol sm="4">
-           <CSelect
-              label="Status"
-              :options="STATUS"
-              :value.sync="form.status"
-              v-model="form.st"
-            />
+            <label for="source">Status</label>
+               <select id="id_project" v-model="form.status" class="form-control">
+
+              <option
+                v-for="(item, index) in STATUS"
+                :key="index"
+                :value="index"
+              >
+                {{ item }}
+              </option>
+            </select>
 
           </CCol>
            <CCol sm="4">
-           <CSelect
-              label="Priority"
-              :options="PRIORITY"
-              :value.sync="form.priority"
-            />
+             <label for="source">Priority</label>
+               <select id="id_project" v-model="form.priority" class="form-control">
+
+              <option
+                v-for="(item, index) in PRIORITY"
+                :key="index"
+                :value="index"
+              >
+                {{ item }}
+              </option>
+            </select>
           </CCol>
 
         </CRow>
@@ -121,6 +124,11 @@
             </CTextarea>
           </CCol>
         </CRow>
+         <CRow>
+          <ul v-if="errors.length > 0" class="alert alert-danger">
+          <li v-for="error in errors" :key="error">{{ error }}</li>
+         </ul>
+        </CRow>
       </CCardBody>
       <CCardFooter>
         <CButton
@@ -139,13 +147,13 @@
   </div>
 </template>
 <script>
-import { DATA_PRIORITY } from '~/constant/constant';
-import { DATA_STATUS } from '~/constant/constant';
+import { DATA_PRIORITY } from "~/constant/constant";
+import { DATA_STATUS } from "~/constant/constant";
 import axios from "axios";
 import swal from "sweetalert2";
 export default {
   name: "CreateEditTask",
- data() {
+  data() {
     return {
       form: {
         id: "",
@@ -155,52 +163,50 @@ export default {
         priority: "",
         spent_time: "",
         estimated_time: "",
-        start_date:"",
-        due_date:"",
-        member_id:"",
-        id_project:"",
-        note:""
+        start_date: "",
+        due_date: "",
+        member_id: "",
+        id_project: "",
+        note: "",
       },
       errors: [],
       STATUS: DATA_STATUS,
-      PRIORITY:DATA_PRIORITY,
-      dataTasks:[]
+      PRIORITY: DATA_PRIORITY,
+      dataTasks: [],
+      dataUsers: [],
     };
   },
   mounted() {
     if (this.$route.params.id != null) {
       this.getTaskByID(this.$route.params.id);
     }
-    this.getData()
+    this.getData(),
+    this.getDataUser();
   },
   props: {
-    title:"",
-    // data: {
-    //   type: Array,
-    //   default: () => [],
-    // },
+    title: "",
   },
   methods: {
     /**
-     * create blog
+     * create task
      */
     createTask() {
+       console.log('OK')
       this.validate();
       if (this.errors.length > 0) {
         return this.errors;
       } else {
-        axios
-          .post("http://localhost:8000/api/task", this.form)
-          .then((res) => {
-            this.$router.push("/task");
-            swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Successfully Added",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+        axios.post("http://localhost:8000/api/task", this.form).then((res) => {
+          console.log('OK')
+          this.$router.push("/task");
+          swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Successfully Added",
+            showConfirmButton: false,
+            timer: 1500,
           });
+        });
       }
     },
     /**
@@ -242,26 +248,25 @@ export default {
       if (this.form.subject == "") {
         this.errors.push("Name không được trống");
       }
-      if (this.form.desc == "") {
-        this.errors.push("Description không được trống");
+      if (this.form.content == "") {
+        this.errors.push("Content không được trống");
       }
       if (this.form.start_date == "") {
         this.errors.push("Start Date không được trống");
       }
     },
 
-
     getData() {
       axios.get("http://127.0.0.1:8000/api/projects").then((res) => {
         this.dataTasks = res.data;
-        // this.page = res.data
+      });
+    },
+    getDataUser() {
+      axios.get("http://127.0.0.1:8000/api/all-user").then((res) => {
+        this.dataUsers = res.data;
       });
     },
   },
-
-
-
-
 };
 </script>
 <style lang="">
