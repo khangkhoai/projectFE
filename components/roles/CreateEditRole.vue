@@ -7,8 +7,15 @@
         </CCol>
       </CRow>
     </CCardBody>
-    <button type="submit" class="btn btn-primary sm-2" v-show="showAdd" @click="addRole">Add</button>
-    <button type="submit" class="btn btn-primary sm-2" v-show="showEdit" @click="editRole(dataRole.id)">Edit</button>
+    <CButton
+        v-if="!this.$route.params.id"
+         color="primary"  @click="addRole()"
+        >
+          Submit
+        </CButton>
+        <CButton v-else color="primary" class="btn-click" @click="editRole(dataRole.id)" >
+          Update
+        </CButton>
   </div>
 </template>
 <script>
@@ -19,10 +26,6 @@ export default {
   },
   data() {
     return {
-        ShowAdd: false,
-        showEdit: true,
-       
-       
         dataRole : {
             'id' : '',
             'name' : ''
@@ -31,9 +34,16 @@ export default {
   },
   methods : {
     addRole(){
-      axios.post('http://127.0.0.1:8000/api/roles/',this.dataRole)
-      
-      
+      axios.post('http://127.0.0.1:8000/api/roles/',this.dataRole).then((res) => {
+            this.$router.push("/roles");
+            swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Successfully Added",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });  
     },
     getRoleByID(id) {
         axios
@@ -42,16 +52,22 @@ export default {
         
     },
     editRole(id){
-        axios.put('http://127.0.0.1:8000/api/roles/' + id,this.dataRole)
-        console.log(this.dataRole)
+        axios.put('http://127.0.0.1:8000/api/roles/' + id,this.dataRole).then((res) => {
+            this.$router.push("/roles");
+            swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Successfully Added",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
     },
     
   },
   mounted() {
     if (this.$route.params.id != null) {
       this.getRoleByID(this.$route.params.id);
-      this.showEdit = !this.showEdit;
-      this.ShowAdd = !this.ShowAdd;
     }
   },
 }

@@ -34,14 +34,19 @@
         </CRow>
         <CRow>
           <CCol sm="12">
-            <CInput
-              label="Role_Id"
-              type="text"
-              v-model="form.role_id"
-            >
-            </CInput>
+              <label>Role</label>
+              <select id="id_project" v-model="form.role_id" class="form-control">
+              <option
+                v-for="(item, index) in dataRoles"
+                :key="index"
+                :value="item.id"
+              >
+              {{ item.name }}
+              </option>
+            </select>
           </CCol>
         </CRow>
+        <br>
         <CRow>
           <ul v-if="errors.length > 0" class="alert alert-danger">
           <li v-for="error in errors" :key="error">{{ error }}</li>
@@ -79,10 +84,12 @@ export default {
         role_id: "",
       },
       errors: [],
+      dataRoles : []
     };
   },
   mounted() {
     this.addUser();
+    this.getDataRole();
     
   },
   methods: {
@@ -122,7 +129,11 @@ export default {
       if (this.form.email == "") {
         this.errors.push("Email không được trống");
       }
-
+    },
+    getDataRole() {
+      axios.get("http://127.0.0.1:8000/api/roles").then((res) => {
+        this.dataRoles = res.data;
+      });
     },
   }
 }
