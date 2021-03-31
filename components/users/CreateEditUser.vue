@@ -38,8 +38,8 @@
               <select id="id_project" v-model="form.role_id" class="form-control">
               <option
                 v-for="(item, index) in dataRoles"
-                :key="index"
-                :value="item.id"
+                :key="item.id"
+               v-bind:value="item.id"
               >
               {{ item.name }}
               </option>
@@ -85,6 +85,7 @@ export default {
       },
       errors: [],
       title: "Add User",
+      dataRoles: [],
     };
   },
   methods: {
@@ -100,6 +101,7 @@ export default {
           .post("http://127.0.0.1:8000/api/auth/signup", this.form)
           .then((res) => {
             this.$router.push("/user");
+            console.log(res.data);
             swal.fire({
               position: "center",
               icon: "success",
@@ -155,8 +157,14 @@ export default {
         this.form = res.data.user;
       });
     },
+    getDataRole() {
+      axios.get("http://127.0.0.1:8000/api/roles").then((res) => {
+        this.dataRoles = res.data;
+      });
+    },
   },
   mounted() {
+    this.getDataRole();
     if (this.$route.params.id) {
       this.title = "Edit User";
       this.getDataUser(this.$route.params.id);
