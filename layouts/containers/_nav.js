@@ -26,12 +26,5 @@ export default [{
             to: '/user',
             icon: 'cil-pencil'
         },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Logout',
-            to: '/login',
-            icon: 'cil-pencil'
-        },
-
     ]
 }]

@@ -1,9 +1,10 @@
 <template>
   <CCardBody >
-    <CDataTable :items="items"
+    <CButton color="info">
+      <nuxt-link :to="`/roles/Create`">Add</nuxt-link>
+    </CButton>
+    <CDataTable :items="listRoles"
       :fields="fields"
-      column-filter
-      table-filter
       items-per-page-select
       :items-per-page="5"
       hover
@@ -44,5 +45,4 @@ export default {
 </script>
 
 <style>
-
 </style>

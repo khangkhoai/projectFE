@@ -1,11 +1,11 @@
 <template>
-  <CreateEditUsers/>
+  <CreateEditUser/>
 </template>
 <script>
-import CreateEditUsers from '@/components/users/CreateEditUsers.vue'
+import CreateEditUser from '@/components/users/CreateEditUser'
 export default {
   components:{
-    CreateEditUsers
+    CreateEditUser
   }
 }
 </script>

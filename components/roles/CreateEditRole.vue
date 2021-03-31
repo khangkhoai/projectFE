@@ -19,6 +19,8 @@ export default {
   },
   data() {
     return {
+        ShowAdd: false,
+        showEdit: true,
        
        
         dataRole : {

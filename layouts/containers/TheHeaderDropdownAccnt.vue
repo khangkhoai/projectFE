@@ -13,76 +13,34 @@
             class="c-avatar-img "
           >
         </div>
+          <a href="">{{$auth.user.name}}</a>
       </CHeaderNavLink>
     </template>
     <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Account</strong>
     </CDropdownHeader>
     <CDropdownItem>
-      <CIcon name="cil-bell" /> Updates
-      <CBadge color="info" class="ml-auto">
-        {{ itemsCount }}
-      </CBadge>
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-envelope-open" /> Messages
-      <CBadge color="success" class="ml-auto">
-        {{ itemsCount }}
-      </CBadge>
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-task" /> Tasks
-      <CBadge color="danger" class="ml-auto">
-        {{ itemsCount }}
-      </CBadge>
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-comment-square" /> Comments
-      <CBadge color="warning" class="ml-auto">
-        {{ itemsCount }}
-      </CBadge>
-    </CDropdownItem>
-    <CDropdownHeader
-      tag="div"
-      class="text-center"
-      color="light"
-    >
-      <strong>Settings</strong>
-    </CDropdownHeader>
-    <CDropdownItem>
-      <CIcon name="cil-user" /> Profile
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-settings" /> Settings
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-dollar" /> Payments
-      <CBadge color="secondary" class="ml-auto">
-        {{ itemsCount }}
-      </CBadge>
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-file" /> Projects
-      <CBadge color="primary" class="ml-auto">
-        {{ itemsCount }}
-      </CBadge>
+      <CIcon :content="$options.freeSet.cilFile" /> Projects
     </CDropdownItem>
     <CDropdownDivider />
     <CDropdownItem>
-      <CIcon name="cil-shield-alt" /> Lock Account
+      <CIcon :content="$options.freeSet.cilShieldAlt" /> Lock Account
     </CDropdownItem>
     <CDropdownItem>
-      <CIcon name="cil-lock-locked" /> Logout
+      <CIcon :content="$options.freeSet.cilLockLocked" /> <CButton @click="logout">Logout</CButton>
     </CDropdownItem>
   </CDropdown>
 </template>
 
 <script>
+import { freeSet } from "@coreui/icons";
 export default {
   name: 'TheHeaderDropdownAccnt',
-  data () {
-    return {
-      itemsCount: 42
+  freeSet,
+  methods: {
+    logout(){
+      this.$auth.logout();
+      this.$router.push('/login');
     }
   }
 }

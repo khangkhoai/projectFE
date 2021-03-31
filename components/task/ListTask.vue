@@ -30,6 +30,11 @@
               {{ item.project.name}}
             </td>
           </template>
+            <template #status="{ item }">
+            <td>
+              {{ filterStatus(item.status)}}
+            </td>
+          </template>
           <template #method="{ item }">
             <td class="py-2">
               <CButton color="success">
@@ -50,20 +55,18 @@
 <script>
 import axios from "axios";
 import { freeSet } from "@coreui/icons";
+import { DATA_STATUS } from '@/constant/constant'
 import swal from "sweetalert2";
 
 const fields = [
-  { key: "id", label: "#" },
+  { key: "id", label: "Id" },
   { key: "subject", label: "Name" },
   { key: "id_project", label: "Project" },
-
   { key: "content", label: "Content" },
   { key: "member_id", label: "Assignee" },
   { key: "status", label: "Status" },
   { key: "start_date", label: "Start Date" },
-
   { key: "due_date", label: "Due Date" },
-
   { key: "method", label: "Method" },
 ];
 
@@ -79,6 +82,7 @@ export default {
   data() {
     return {
       fields: fields,
+      STATUS: DATA_STATUS
     };
   },
   methods: {
@@ -104,6 +108,16 @@ export default {
             swal.fire("Deleted!", "Your file has been deleted.", "success");
           }
         });
+    },
+     /**
+     * get name status
+     */
+    filterStatus(id) {
+      return this.STATUS.find((status, index) => {
+        if (index === id) {
+          return status
+        }
+      })
     },
   },
 };

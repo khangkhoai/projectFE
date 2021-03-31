@@ -15,7 +15,6 @@
           items-per-page-select
           :items-per-page="5"
           hover
-          sorter
           pagination
         >
           <template #method="{ item }">
@@ -41,18 +40,11 @@ import { freeSet } from "@coreui/icons";
 import swal from "sweetalert2";
 
 const fields = [
-  { key: "id", label: "#", _style: "min-width:100px" },
+  { key: "id", label: "Id", _style: "min-width:100px" },
   { key: "name", label: "Name", _style: "min-width:150px" },
   { key: "desc", label: "Description", _style: "min-width:100px;" },
   { key: "start_date", label: "Start Date", _style: "min-width:100px;" },
   { key: "method", label: "Method", _style: "min-width:100px;" },
-  // {
-  //   key: 'show_details',
-  //   label: '',
-  //   _style: 'width:1%',
-  //   sorter: false,
-  //   filter: false
-  // }
 ];
 
 export default {

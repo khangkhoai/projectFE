@@ -4,7 +4,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
 import CreateEditRole from "@/components/roles/CreateEditRole.vue";
 export default {
   name: 'new',
@@ -13,17 +12,14 @@ export default {
   },
   data() {
     return {
-        
-        showEdit: true,
-        dataRole : {
-            'id' : '',
-            'name' : ''
+     
+      dataRole : {
+          'id' : '',
+          'name' : ''
         }
     }
   },
-
 }
 </script>
 <style scoped>
-
 </style>
