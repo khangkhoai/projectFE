@@ -1,14 +1,15 @@
 <template>
-  <CRow>
-    <CCol sm="4">
-      <CInput label="Name" placeholder="Enter your name" v-model="keyword" />
-    </CCol>
-    <CCol sm="4" class="search">
-      <CButton color="success" class="m-2 btn-search" @click="search">
+<div class="box">
+ <CRow>
+    <CCol sm="4" class="search position-relative">
+      <CInput  placeholder="Enter your key search" v-model="keyword" />
+      <CButton  class="btn-sm btn-search position-absolute" @click="search">
         <CIcon :content="$options.freeSet.cilMagnifyingGlass" />
       </CButton>
     </CCol>
   </CRow>
+</div>
+
 </template>
 <script>
 import { freeSet } from "@coreui/icons";
@@ -28,9 +29,12 @@ export default {
 </script>
 <style scoped>
 .search {
-  padding: 0;
+top: 67px;
+    left: 65%;
+    z-index: 1000;
 }
 .btn-search {
-  margin-top: 8% !important;
+top:1px;
+right: 17px;
 }
 </style>
