@@ -28,7 +28,7 @@
         </CRow>
         <CRow>
           <CCol sm="12">
-            <CInput label="Comfirm-Password" type="password"  v-model="form.comfirm_password">
+            <CInput label="Comfirm-Password" type="password"  v-model="form.password_confirmation">
             </CInput>
           </CCol>
         </CRow>
@@ -79,7 +79,7 @@ export default {
         id: "",
         name: "",
         password : "",
-        comfirm_password:"",
+        password_confirmation:"",
         email: "",
         role_id: "",
       },
@@ -98,7 +98,7 @@ export default {
       if (this.errors.length > 0) {
         return this.errors;
       } else {
-        axios.post('http://127.0.0.1:8000/api/user/',this.form) 
+        axios.post('http://127.0.0.1:8000/api/auth/signup',this.form) 
           .then((res) => {
             this.$router.push("/user");
             swal.fire({
@@ -123,7 +123,7 @@ export default {
       if (this.form.password == "") {
         this.errors.push("Password không được trống");
       }
-      if (this.form.password!==this.form.comfirm_password) {
+      if (this.form.password!==this.form.password_confirmation) {
         this.errors.push("Password không giống");
       }
       if (this.form.email == "") {
