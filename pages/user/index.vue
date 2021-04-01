@@ -1,23 +1,16 @@
 <template lang="">
   <div>
-    <CCard>
-      <CCardHeader>
-        <h3>List User</h3>
-      </CCardHeader>
-      <CCardBody>
-        <search  @sendKeyword="getKeyword"/>
-        <list-user :dataUser="dataUser" :fields="fields" />
-        <b-pagination
-        v-show="page.last_page>1"
-          v-model="currentPage"
-          :total-rows="page.total"
-          :per-page="page.per_page"
-          @page-click="getUser"
-          prev-text="Prev"
-          next-text="Next"
-        ></b-pagination>
-      </CCardBody>
-    </CCard>
+    <search @sendKeyword="getKeyword" />
+    <list-user :dataUser="dataUser" :fields="fields" />
+    <!-- <b-pagination
+      v-show="page.last_page > 1"
+      v-model="currentPage"
+      :total-rows="page.total"
+      :per-page="page.per_page"
+      @page-click="getUser"
+      prev-text="Prev"
+      next-text="Next"
+    ></b-pagination> -->
   </div>
 </template>
 <script>
@@ -28,7 +21,7 @@ import { FIELDS } from "../../constant/constant";
 export default {
   components: {
     ListUser,
-    Search
+    Search,
   },
   data() {
     return {
@@ -36,28 +29,38 @@ export default {
       fields: FIELDS,
       page: {},
       currentPage: 1,
-      search: ''
+      search: "",
     };
   },
   methods: {
-    getUser(e,page) {
-      axios.get("http://localhost:8000/api/all-user?page="+page).then(res => {
-        this.dataUser = res.data.data;
-        this.page = res.data;
-      });
-    },
-    getKeyword(value){
-      this.search = value;
-      axios.get("http://localhost:8000/api/search?username="+this.search).then(res => {
+    /**
+     * get all user in api
+     */
+    getUser() {
+      axios.get("http://localhost:8000/api/all-user").then((res) => {
         this.dataUser = res.data;
-        // console.log(res.data);
         // this.page = res.data;
       });
-    }
+    },
+
+    /**
+     * get key word search
+     * @param String key word search
+     */
+    getKeyword(value) {
+      this.search = value;
+      axios
+        .get("http://localhost:8000/api/search?username=" + this.search)
+        .then((res) => {
+          this.dataUser = res.data;
+          // console.log(res.data);
+          // this.page = res.data;
+        });
+    },
   },
   mounted() {
     this.getUser();
-  }
+  },
 };
 </script>
 <style lang=""></style>

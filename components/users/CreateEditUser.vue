@@ -2,7 +2,7 @@
   <div>
     <CCard>
       <CCardHeader >
-        <h3>Add User</h3>
+        <h3>{{title}}</h3>
       </CCardHeader>
       <CCardBody>
         <CRow>
@@ -28,20 +28,25 @@
         </CRow>
         <CRow>
           <CCol sm="12">
-            <CInput label="Comfirm-Password" type="password"  v-model="form.comfirm_password">
+            <CInput label="Comfirm-Password" type="password"  v-model="form.password_confirmation">
             </CInput>
           </CCol>
         </CRow>
         <CRow>
           <CCol sm="12">
-            <CInput
-              label="Role_Id"
-              type="text"
-              v-model="form.role_id"
-            >
-            </CInput>
+              <label>Role</label>
+              <select id="id_project" v-model="form.role_id" class="form-control">
+              <option
+                v-for="(item, index) in dataRoles"
+                :key="item.id"
+               v-bind:value="item.id"
+              >
+              {{ item.name }}
+              </option>
+            </select>
           </CCol>
         </CRow>
+        <br>
         <CRow>
           <ul v-if="errors.length > 0" class="alert alert-danger">
           <li v-for="error in errors" :key="error">{{ error }}</li>
@@ -55,7 +60,7 @@
         >
           Submit
         </CButton>
-        <CButton v-else color="primary" class="btn-click" @click="updateProject(form.id)" >
+        <CButton v-else color="primary" class="btn-click" @click="updateUser(form.id)" >
           Update
         </CButton>
 
@@ -73,27 +78,30 @@ export default {
       form: {
         id: "",
         name: "",
-        password : "",
-        comfirm_password:"",
+        password: "",
+        password_confirmation: "",
         email: "",
         role_id: "",
       },
       errors: [],
+      title: "Add User",
+      dataRoles: [],
     };
   },
-  mounted() {
-    this.addUser();
-    
-  },
   methods: {
+    /**
+     * signin user
+     */
     addUser() {
       this.validate();
       if (this.errors.length > 0) {
         return this.errors;
       } else {
-        axios.post('http://127.0.0.1:8000/api/user/',this.form) 
+        axios
+          .post("http://127.0.0.1:8000/api/auth/signup", this.form)
           .then((res) => {
             this.$router.push("/user");
+            console.log(res.data);
             swal.fire({
               position: "center",
               icon: "success",
@@ -104,7 +112,7 @@ export default {
           });
       }
     },
-    
+
     /**
      * check validate
      */
@@ -116,16 +124,69 @@ export default {
       if (this.form.password == "") {
         this.errors.push("Password không được trống");
       }
-      if (this.form.password!==this.form.comfirm_password) {
+      if (this.form.password !== this.form.password_confirmation) {
         this.errors.push("Password không giống");
       }
       if (this.form.email == "") {
         this.errors.push("Email không được trống");
       }
-
     },
-  }
-}
+
+    /**
+     * update user login
+     * @param Interger id user login
+     */
+    updateUser(id) {
+      if (this.errors.length > 0) {
+        return this.errors;
+      } else {
+        axios
+          .put("http://127.0.0.1:8000/api/user/" + id, this.form)
+          .then((res) => {
+            this.$router.push("/");
+            swal.fire({
+              position: "center",
+              icon: "success",
+              title: "update successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
+      }
+    },
+
+    /**
+     * get data user login
+     * @param Interger id user 
+     */
+    getDataUser(id) {
+      axios.get("http://127.0.0.1:8000/api/user/" + id).then((res) => {
+        this.form = res.data.user;
+      });
+    },
+
+    /**
+     * get data role in api
+     */
+    getDataRole() {
+      axios.get("http://127.0.0.1:8000/api/roles").then((res) => {
+        this.dataRoles = res.data;
+      });
+    },
+  },
+  mounted() {
+    this.getDataRole();
+
+    /**
+     * check param in url 
+     * if has param call method getDataUser
+     */
+    if (this.$route.params.id) {
+      this.title = "Edit User";
+      this.getDataUser(this.$route.params.id);
+    }
+  },
+};
 </script>
 <style lang="">
 </style>
