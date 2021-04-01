@@ -76,7 +76,7 @@
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </p>
-                <CButton color="light" variant="outline" size="lg">
+                <CButton color="light" variant="outline" size="lg" @click="register">
                   Register Now!
                 </CButton>
               </CCardBody>
@@ -129,6 +129,9 @@ export default {
         this.err.password = "mật khẩu không được để trống";
       }
     },
+    register(){
+      this.$router.push('/Register')
+    }
   },
 };
 </script>
