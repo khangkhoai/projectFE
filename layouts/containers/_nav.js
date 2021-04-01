@@ -26,5 +26,11 @@ export default [{
             to: '/user',
             icon: 'cil-pencil'
         },
+        {
+            _name: 'CSidebarNavItem',
+            name: 'Role',
+            to: '/roles',
+            icon: 'cil-pencil'
+        }
     ]
 }]

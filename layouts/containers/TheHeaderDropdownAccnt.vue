@@ -19,12 +19,9 @@
     <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Account</strong>
     </CDropdownHeader>
-    <CDropdownItem>
-      <CIcon :content="$options.freeSet.cilFile" /> Projects
-    </CDropdownItem>
     <CDropdownDivider />
     <CDropdownItem>
-      <CIcon :content="$options.freeSet.cilShieldAlt" /> Lock Account
+      <CIcon :content="$options.freeSet.cilShieldAlt" />  <nuxt-link :to="`/user/${$auth.user.id}`">info</nuxt-link>
     </CDropdownItem>
     <CDropdownItem>
       <CIcon :content="$options.freeSet.cilLockLocked" /> <CButton @click="logout">Logout</CButton>
