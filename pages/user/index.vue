@@ -37,7 +37,11 @@ export default {
      * get all user in api
      */
     getUser() {
-      axios.get("http://localhost:8000/api/all-user").then((res) => {
+      axios.get("http://localhost:8000/api/all-user", {
+            headers: {
+              Authorization: `${$nuxt.$auth.getToken("local")}`,
+            },
+          }).then((res) => {
         this.dataUser = res.data;
         // this.page = res.data;
       });

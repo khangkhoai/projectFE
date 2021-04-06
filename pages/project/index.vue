@@ -1,6 +1,6 @@
  <template lang="">
   <div>
-    <search  @sendKeyword="getKeyword"/>
+    
     <ListProject :dataProjects="dataProjects"  @getListProjects="getData"/>
   </div>
 </template>
@@ -24,7 +24,11 @@ export default {
      * get list blog
      */
     getData() {
-      axios.get("http://127.0.0.1:8000/api/projects").then((res) => {
+      axios.get("http://127.0.0.1:8000/api/projects", {
+            headers: {
+              Authorization: `${$nuxt.$auth.getToken("local")}`,
+            },
+          }).then((res) => {
         this.dataProjects = res.data;
         // this.page = res.data
 

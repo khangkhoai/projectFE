@@ -74,7 +74,9 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios.delete('http://127.0.0.1:8000/api/roles/' + id)
+            axios.delete('http://127.0.0.1:8000/api/roles/' + id, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              })
               .then((res) => {
               });
             swal.fire("Deleted!", "Your file has been deleted.", "success");
@@ -84,7 +86,9 @@ export default {
     searchRole(value){
       this.keySearch=value;
       console.log(this.keySearch)
-      axios.get("http://localhost:8000/api/roles/search?name="+this.keySearch).then(res => {
+      axios.get("http://localhost:8000/api/roles/search?name="+this.keySearch, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              }).then(res => {
         this.dataUser = res.data;
        
       });

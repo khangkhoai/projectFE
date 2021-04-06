@@ -100,10 +100,17 @@ export default {
      * get role in api
      */
     getRole(){
-      axios.get('http://localhost:8000/api/roles').then(res=>{
-        this.dataRole = res.data
-        // console.log(this.dataRole);
-      });
+     axios
+          .get("http://127.0.0.1:8000/api/all-user", {
+            headers: {
+              Authorization: `${$nuxt.$auth.getToken("local")}`,
+            },
+          })
+          .then((res) => {
+            this.dataUser = res.data;
+            console.log(res);
+            // this.page = res.data;
+          });
     },
     /**
      * get name of role 
@@ -121,7 +128,11 @@ export default {
       });
     },
     getTaskOfUser(id){
-       axios.get("http://localhost:8000/api/user/get/"+id).then(res => {
+       axios.get("http://localhost:8000/api/user/get/"+id, {
+            headers: {
+              Authorization: `${$nuxt.$auth.getToken("local")}`,
+            },
+          }).then(res => {
         this.listTasks = res.data;
         console.log(res.data);
         // this.page = res.data;

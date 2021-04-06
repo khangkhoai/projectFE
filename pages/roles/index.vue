@@ -21,12 +21,16 @@ export default {
   },
   methods: {
     listData(){
-      axios({method: 'GET',url: 'http://127.0.0.1:8000/api/roles/',data: null}).then(res =>{this.listRoles = res.data; 
+       axios.get("http://localhost:8000/api/roles/", {
+                headers: { Authorization: this.$auth.getToken("local") }
+              }).then(res =>{this.listRoles = res.data;  console.log(res.data);
       }).catch(err => {console.log(err)}) 
     }, 
     getKeyword(value){
       this.search = value;
-      axios.get("http://localhost:8000/api/roles?name="+this.search).then(res => {
+      axios.get("http://localhost:8000/api/roles?name="+this.search,this.dataRole, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              }).then(res => {
         this.listRoles = res.data;
         console.log(res.data);
         // this.page = res.data;
