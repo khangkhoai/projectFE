@@ -9,13 +9,13 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Project',
-            to: '/project',
+            name: 'Product',
+            to: '/product',
             icon: 'cil-drop'
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Task',
+            name: 'Category',
             to: '/task',
             icon: 'cil-drop'
         },
@@ -26,11 +26,6 @@ export default [{
             to: '/user',
             icon: 'cil-pencil'
         },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Role',
-            to: '/roles',
-            icon: 'cil-pencil'
-        }
+        
     ]
 }]

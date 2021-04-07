@@ -2,11 +2,11 @@
   <div>
     <CCard>
       <CCardHeader>
-        <h3>List Role</h3>
+        <h3>List Product</h3>
       </CCardHeader>
       <CCardBody >
         <CButton color="primary" class="m-2 btn_add">
-          <nuxt-link to="/roles/Create" class="text-white d-block"> + Add</nuxt-link>
+          <nuxt-link to="/product/add" class="text-white d-block"> + Add</nuxt-link>
         </CButton>
       <CDataTable :items="listRoles"
           :fields="fields"
@@ -18,7 +18,7 @@
         <template #method="{ item }">
            <td class="py-2">
               <CButton color="success">
-                <nuxt-link :to="`/roles/${item.id}`">
+                <nuxt-link :to="`/product/${item.id}`">
                   <CIcon :content="$options.freeSet.cilPencil" />
                 </nuxt-link>
               </CButton>
@@ -38,9 +38,13 @@ import { freeSet } from "@coreui/icons";
 import swal from "sweetalert2";
 const fields = [
     { key: 'id', label: 'ID',_style:'min-width:50px' },
-    { key: 'name', label: 'RoleName',_style:'min-width:150px' },
-    { key: 'created_at', _style:'min-width:50px;' },
-    { key: 'updated_at', _style:'min-width:50px;' },
+    { key: 'name', label: 'ProductName',_style:'min-width:150px' },
+    { key: 'desc', _style:'min-width:50px;' },
+    { key: 'price', _style:'min-width:50px;' },
+    { key: 'amount', _style:'min-width:50px;' },
+    { key: 'discount', _style:'min-width:50px;' },
+    { key: 'sale_price', _style:'min-width:50px;' },
+    { key: 'category_id', _style:'min-width:50px;' },
     { key: "method", label: "Method", _style: "min-width:100px;" },
 ]
 export default {
@@ -74,9 +78,7 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios.delete('http://127.0.0.1:8000/api/roles/' + id, {
-                headers: { Authorization: this.$auth.getToken("local") }
-              })
+            axios.delete('http://127.0.0.1:8000/api/product/' + id)
               .then((res) => {
               });
             swal.fire("Deleted!", "Your file has been deleted.", "success");

@@ -1,5 +1,5 @@
 <template>
-  <CHeader fixed with-subheader light v-if="$auth.loggedIn">
+  <CHeader fixed with-subheader light>
     <CToggler
       v-c-emit-root-event:toggle-sidebar-mobile
       in-header
@@ -17,23 +17,7 @@
       height="46"
       alt="CoreUI Logo"
     />
-    <CHeaderNav class="d-md-down-none mr-auto">
-      <!-- <CHeaderNavItem class="px-3"> -->
-        <!-- <CHeaderNavLink to="/dashboard"> -->
-          <!-- Dashboard -->
-        <!-- </CHeaderNavLink> -->
-      <!-- </CHeaderNavItem> -->
-      <CHeaderNavItem class="px-3">
-        <CHeaderNavLink to="/users" exact>
-          <!-- Users -->
-        </CHeaderNavLink>
-      </CHeaderNavItem>
-      <CHeaderNavItem class="px-3">
-        <CHeaderNavLink>
-          <!-- Settings -->
-        </CHeaderNavLink>
-      </CHeaderNavItem>
-    </CHeaderNav>
+  
     <CHeaderNav class="mr-4">
       <CHeaderNavItem class="d-md-down-none mx-2">
         <CHeaderNavLink>
@@ -52,9 +36,7 @@
       </CHeaderNavItem>
       <TheHeaderDropdownAccnt />
     </CHeaderNav>
-    <!-- <CSubheader class="px-3">
-      <CBreadcrumbRouter class="border-0" />
-    </CSubheader> -->
+   
   </CHeader>
 </template>
 

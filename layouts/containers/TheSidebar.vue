@@ -3,18 +3,12 @@
     fixed
     :minimize="minimize"
     :show.sync="show"
-    v-if="$auth.loggedIn"
   >
     <CSidebarBrand
-
-    >
-      <img
-        width="70%"
-        height="90%"
-        :src="require(`@/assets/img/logo.png`)"
-        class="c-sidebar-brand-full img-fluid w-25"
-      />
-    </CSidebarBrand>
+      :img-full="{ width: 118, height: 46, alt: 'Logo', src: 'img/brand/coreui-base-white.svg'}"
+      :img-minimized="{ width: 118, height: 46, alt: 'Logo', src: 'img/brand/coreui-signet-white.svg'}"
+      :wrapped-in-link="{ href: 'https://coreui.io/', target: '_blank'}"
+    />
     <CRenderFunction flat :content-to-render="nav" />
     <CSidebarMinimizer
       class="d-md-down-none"

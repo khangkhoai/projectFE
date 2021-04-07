@@ -113,7 +113,7 @@ export default {
               data: this.userForm,
             })
             .then((res) => {
-              this.$router.push("/");
+              this.$router.push("/index");
             });
         } catch (err) {
           this.err.fail = "Username or Password not valid";
