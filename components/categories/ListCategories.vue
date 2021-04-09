@@ -26,7 +26,38 @@
                 <CIcon :content="$options.freeSet.cilTrash" />
               </CButton>
             </td>
-        </template> 
+        </template>
+         <template #show_details="{ item, index }">
+            <td class="py-2">
+              <CButton
+                color="primary"
+                variant="outline"
+                square
+                size="sm"
+                @click="toggleDetails(item, index),getDetails(item.id)"
+              >
+                {{ Boolean(item._toggled) ? "Hide" : "Show" }}
+              </CButton>
+            </td>
+          </template>
+           <template #details="{ item }">
+            <CCollapse
+              :show="Boolean(item._toggled)"
+              :duration="collapseDuration"
+            >
+              <CCardBody>
+                <h6>List Task</h6>
+                <CDataTable 
+                :items="listDetails"
+                :fields="fields1"
+                hover
+                pagination
+                striped
+                >
+                </CDataTable>
+              </CCardBody>
+            </CCollapse>
+          </template> 
       </CDataTable>
       </CCardBody>
     </CCard>
@@ -41,6 +72,20 @@ const fields = [
     { key: 'name', label: 'ProductName',_style:'min-width:150px' },
     { key: 'thumb', _style:'min-width:50px;' },
     { key: "method", label: "Method", _style: "min-width:100px;" },
+    { key: "show_details", label: "Method", _style: "min-width:100px;" },
+   
+]
+const fields1 = [
+    { key: 'id', label: 'ID',_style:'min-width:50px' },
+    { key: "thumb",_style:'width:100px;'},
+    { key: 'name', label: 'ProductName',_style:'min-width:100px' },
+    { key: 'desc', _style:'min-width:50px;' },
+    { key: 'price', _style:'min-width:50px;' },
+    { key: 'amount', _style:'min-width:50px;' },
+    { key: 'discount', _style:'min-width:50px;' },
+    { key: 'sale_price', _style:'min-width:50px;' },
+    { key: 'category_id', _style:'min-width:50px;' },
+    { key: "method", label: "Method", _style: "min-width:100px;" },
 ]
 export default {
   
@@ -50,10 +95,15 @@ export default {
       type: Array,
       default: () => [],
     },
+    listDetails: {
+      type: Array,
+      default: () => [],
+    }
   },
   data () {
     return {
       fields : fields ,
+      fields1 : fields1 ,
       keySearch : ''
       
     }
@@ -73,7 +123,9 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios.delete('http://127.0.0.1:8000/api/category/' + id)
+            axios.delete('http://127.0.0.1:8000/api/category/' + id, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              })
               .then((res) => {
                
               });
@@ -82,6 +134,24 @@ export default {
           }
         });
     },
+    toggleDetails(item, index) {
+      this.$set(this.listData[index], "_toggled", !item._toggled);
+      this.collapseDuration = 300;
+      this.$nextTick(() => {
+        this.collapseDuration = 0;
+      });
+    },
+    getDetails(id) {
+      axios.get("http://localhost:8000/api/category/get/" + id, {
+            headers: {
+              Authorization: `${$nuxt.$auth.getToken("local")}`,
+            },
+          }).then(res => {
+        this.listDetails = res.data;
+        console.log(res.data);
+        // this.page = res.data;
+      });
+    }
   },
   
 }

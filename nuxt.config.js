@@ -71,28 +71,31 @@ export default {
         extend(config, ctx) { }
     },
 
-    // auth: {
+    auth: {
        
-    //     strategies: {
-    //         local: {
-    //             endpoints: {
-    //                 login: {
-    //                     url: 'auth/login',
-    //                     method: 'post',
-    //                     propertyName: 'accessToken'
-    //                 },
-    //                 user: {
-    //                     url: 'auth/user',
-    //                     method: 'post',
-    //                     propertyName: 'user'
-    //                 },
-    //                 logout: false
-    //             }
-    //         },
-    //     }
-    // },
+        strategies: {
+            local: {
+                endpoints: {
+                    login: {
+                        url: 'auth/login',
+                        method: 'post',
+                        propertyName: 'accessToken'
+                    },
+                    user: {
+                        url: 'user',
+                        method: 'get',
+                        propertyName: 'user'
+                    },
+                    logout: false
+                }
+            },
+        }
+    },
 
-    // router: {
-    //     middleware: ['auth']
-    // }
+    router: {
+        middleware: ['auth']
+    },
+    build: {
+        transpile: ['@nuxtjs/auth']
+      }
 }

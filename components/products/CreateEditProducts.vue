@@ -56,16 +56,7 @@
           </CCol>
         </CRow>
         <CRow>
-          <CCol sm="12">
-            <CInput
-              label="Thumb"
-              v-model="dataProduct.thumb"
-              placeholder="Enter your name"
-            />
-          </CCol>
-        </CRow>
-        <CRow>
-          <CCol sm="12">
+          <CCol sm="6">
           <label for="source">Category</label>
                <select id="category_id" v-model="dataProduct.category_id" class="form-control">
 
@@ -78,13 +69,20 @@
               </option>
             </select>
           </CCol>
+           <CCol sm="6">
+            <CInputFile
+              label="Thumb"
+              v-model="dataProduct.thumb"
+              placeholder="Enter your name"
+            />
+          </CCol>
         </CRow>
       </CCardBody>
       <CCardFooter>
         <CButton
           v-if="!this.$route.params.id"
           color="primary"
-          @click="addProduct()"
+          @click="addProduct(dataProduct)"
         >
           Submit
         </CButton>
@@ -101,6 +99,7 @@
   </div>
 </template>
 <script>
+import swal from "sweetalert2";
 import axios from "axios";
 export default {
   name: "new",
@@ -110,8 +109,14 @@ export default {
       dataProduct: {
         id: "",
         name: "",
-        permission: []
+        thumb: "",
+        price: "",
+        discount: "",
+        category_id: "",
+        desc: "",
+        amount: "",
       },
+      
       dataCatagory : []
     };
   },
@@ -119,9 +124,23 @@ export default {
     title: ""
   },
   methods: {
-    addProduct() {
+    addProduct(dataProduct) {
+      console.warn(' dataProduct.thumb.target.files[0]',  dataProduct.thumb.target.files[0]);
+      const data = new FormData();
+      data.append("category_id", dataProduct.category_id);
+      data.append("name", dataProduct.name);
+      data.append("desc", dataProduct.desc);
+      data.append("price", dataProduct.price);
+      data.append("discount", dataProduct.discount);
+      data.append("amount", dataProduct.amount);
+      data.append("thumb", dataProduct.thumb.target.files[0]);
       axios
-        .post("http://127.0.0.1:8000/api/product/", this.dataProduct)
+        .post("http://127.0.0.1:8000/api/product/", data,{
+          headers: {
+            Authorization: this.$auth.getToken("local"),
+            "Content-type": "multipart/form-data",
+          },
+        })
         .then(res => {
           this.$router.push("/product");
           swal.fire({
@@ -135,7 +154,9 @@ export default {
     },
      getProductByID(id) {
       axios
-        .get("http://127.0.0.1:8000/api/product/" + id )
+        .get("http://127.0.0.1:8000/api/product/" + id , {
+                headers: { Authorization: this.$auth.getToken("local") }
+              })
         .then(res => {
           this.dataProduct = res.data;
           console.log(this.dataProduct);
@@ -145,7 +166,9 @@ export default {
       axios
         .put(
           "http://127.0.0.1:8000/api/product/" + id,
-          this.dataProduct
+          this.dataProduct, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              }
           
         )
         .then(res => {
@@ -160,7 +183,9 @@ export default {
         });
     },
     getData() {
-      axios.get("http://127.0.0.1:8000/api/category").then((res) => {
+      axios.get("http://127.0.0.1:8000/api/category", {
+                headers: { Authorization: this.$auth.getToken("local") }
+              }).then((res) => {
         this.dataCatagory = res.data;
       });
     },

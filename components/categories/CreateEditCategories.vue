@@ -65,9 +65,11 @@ export default {
   methods: {
     addProduct() {
       axios
-        .post("http://127.0.0.1:8000/api/customer/", this.dataForm)
+        .post("http://127.0.0.1:8000/api/category/", this.dataForm, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              })
         .then(res => {
-          this.$router.push("/custome");
+          this.$router.push("/category");
           swal.fire({
             position: "center",
             icon: "success",
@@ -79,7 +81,9 @@ export default {
     },
      getProductByID(id) {
       axios
-        .get("http://127.0.0.1:8000/api/custome/" + id )
+        .get("http://127.0.0.1:8000/api/category/" + id , {
+                headers: { Authorization: this.$auth.getToken("local") }
+              })
         .then(res => {
           this.dataForm = res.data;
           console.log(this.dataForm);
@@ -88,12 +92,13 @@ export default {
     editProduct(id) {
       axios
         .put(
-          "http://127.0.0.1:8000/api/custome/" + id,
-          this.dataForm
-          
+          "http://127.0.0.1:8000/api/category/" + id,
+          this.dataForm, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              } 
         )
         .then(res => {
-          this.$router.push("/custome");
+          this.$router.push("/category");
           swal.fire({
             position: "center",
             icon: "success",

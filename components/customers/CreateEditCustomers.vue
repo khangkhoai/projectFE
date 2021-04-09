@@ -92,7 +92,9 @@ export default {
   methods: {
     addProduct() {
       axios
-        .post("http://127.0.0.1:8000/api/customer/", this.dataForm)
+        .post("http://127.0.0.1:8000/api/customer/", this.dataForm, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              } )
         .then(res => {
           this.$router.push("/customer");
           swal.fire({
@@ -106,7 +108,9 @@ export default {
     },
      getProductByID(id) {
       axios
-        .get("http://127.0.0.1:8000/api/customer/" + id )
+        .get("http://127.0.0.1:8000/api/customer/" + id , {
+                headers: { Authorization: this.$auth.getToken("local") }
+              } )
         .then(res => {
           this.dataForm = res.data;
           console.log(this.dataForm);
@@ -115,9 +119,9 @@ export default {
     editProduct(id) {
       axios
         .put(
-          "http://127.0.0.1:8000/api/customer/" + id,
-          this.dataForm
-          
+          "http://127.0.0.1:8000/api/customer/" + id,this.dataForm, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              }   
         )
         .then(res => {
           this.$router.push("/customer");

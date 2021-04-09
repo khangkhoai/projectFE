@@ -10,6 +10,7 @@
         </CButton>
       <CDataTable :items="listRoles"
           :fields="fields"
+          tableFilter
           items-per-page-select
           :items-per-page="5"
           hover
@@ -17,9 +18,8 @@
         >
         <template #thumb="{ item }">
             <td class="thumb">
-              {{ item.thumb }}
-              <img :src="require(`@/assets/img/logo.png`)" alt="" width="1%"
-                height="1%"  class="c-sidebar-brand-full img-fluid w-50">
+              <img v-bind:src="'http://127.0.0.1:8000/' + item.thumb"  alt="" width="1%"
+                height="1%"  class="c-sidebar-brand-full img-fluid w-75">
               <!-- <img
                 width="1%"
                 height="1%"
@@ -51,7 +51,7 @@ import { freeSet } from "@coreui/icons";
 import swal from "sweetalert2";
 const fields = [
     { key: 'id', label: 'ID',_style:'min-width:50px' },
-    { key: "thumb",_style:'width:150px;'},
+    { key: "thumb",_style:'width:100px;'},
     { key: 'name', label: 'ProductName',_style:'min-width:100px' },
     { key: 'desc', _style:'min-width:50px;' },
     { key: 'price', _style:'min-width:50px;' },
@@ -92,7 +92,9 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios.delete('http://127.0.0.1:8000/api/product/' + id)
+            axios.delete('http://127.0.0.1:8000/api/product/' + id, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              })
               .then((res) => {
               });
             swal.fire("Deleted!", "Your file has been deleted.", "success");

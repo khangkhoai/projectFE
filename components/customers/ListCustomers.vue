@@ -44,6 +44,7 @@ const fields = [
     { key: 'phone', _style:'min-width:50px;' },
     { key: 'address', _style:'min-width:50px;' },
     { key: "method", label: "Method", _style: "min-width:100px;" },
+    { key: "detail", label: "Detail", _style: "min-width:100px;" },
 ]
 export default {
   
@@ -76,7 +77,9 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios.delete('http://127.0.0.1:8000/api/customer/' + id)
+            axios.delete('http://127.0.0.1:8000/api/customer/' + id, {
+                headers: { Authorization: this.$auth.getToken("local") }
+              } )
               .then((res) => {
                
               });

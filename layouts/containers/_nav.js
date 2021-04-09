@@ -20,12 +20,7 @@ export default [{
             icon: 'cil-drop'
         },
 
-        {
-            _name: 'CSidebarNavItem',
-            name: 'User',
-            to: '/user',
-            icon: 'cil-pencil'
-        },
+       
         {
             _name: 'CSidebarNavItem',
             name: 'Customer',
