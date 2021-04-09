@@ -2,40 +2,27 @@
   <div>
     <CCard>
       <CCardHeader>
-        <h3>List Product</h3>
+        <h3>List Customer</h3>
       </CCardHeader>
       <CCardBody >
         <CButton color="primary" class="m-2 btn_add">
-          <nuxt-link to="/product/add" class="text-white d-block"> + Add</nuxt-link>
+          <nuxt-link to="/order/add" class="text-white d-block"> + Add</nuxt-link>
         </CButton>
-      <CDataTable :items="listRoles"
+      <CDataTable :items="listData"
           :fields="fields"
           items-per-page-select
           :items-per-page="5"
           hover
           pagination
         >
-        <template #thumb="{ item }">
-            <td class="thumb">
-              {{ item.thumb }}
-              <img :src="require(`@/assets/img/logo.png`)" alt="" width="1%"
-                height="1%"  class="c-sidebar-brand-full img-fluid w-50">
-              <!-- <img
-                width="1%"
-                height="1%"
-                v-bind:src="'/_nuxt' + item.thumb"
-                class="c-sidebar-brand-full img-fluid w-75"
-              /> -->
-            </td>
-        </template>
         <template #method="{ item }">
            <td class="py-2">
               <CButton color="success">
-                <nuxt-link :to="`/product/${item.id}`">
+                <nuxt-link :to="`/order/${item.id}`">
                   <CIcon :content="$options.freeSet.cilPencil" />
                 </nuxt-link>
               </CButton>
-              <CButton color="danger" @click="deleteRole(item.id)">
+              <CButton color="danger" @click="deleteCustomer(item.id)">
                 <CIcon :content="$options.freeSet.cilTrash" />
               </CButton>
             </td>
@@ -51,21 +38,19 @@ import { freeSet } from "@coreui/icons";
 import swal from "sweetalert2";
 const fields = [
     { key: 'id', label: 'ID',_style:'min-width:50px' },
-    { key: "thumb",_style:'width:150px;'},
-    { key: 'name', label: 'ProductName',_style:'min-width:100px' },
-    { key: 'desc', _style:'min-width:50px;' },
-    { key: 'price', _style:'min-width:50px;' },
-    { key: 'amount', _style:'min-width:50px;' },
-    { key: 'discount', _style:'min-width:50px;' },
-    { key: 'sale_price', _style:'min-width:50px;' },
-    { key: 'category_id', _style:'min-width:50px;' },
+    { key: 'customer_id', _style:'min-width:50px;' },
+    { key: 'name', label: 'ProductName',_style:'min-width:150px' },
+    { key: 'date', _style:'min-width:50px;' },
+    { key: 'status', _style:'min-width:50px;' },
+    { key: 'address', _style:'min-width:50px;' },
+    { key: 'total_price', _style:'min-width:50px;' },
     { key: "method", label: "Method", _style: "min-width:100px;" },
 ]
 export default {
-  name: 'ListRole',
+  
   freeSet,
    props: {
-    listRoles: {
+    listData: {
       type: Array,
       default: () => [],
     },
@@ -78,7 +63,7 @@ export default {
     }
   },
   methods: {
-    deleteRole(id)
+    deleteCustomer(id)
     {
       swal
         .fire({
@@ -92,23 +77,15 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios.delete('http://127.0.0.1:8000/api/product/' + id)
+            axios.delete('http://127.0.0.1:8000/api/order/' + id)
               .then((res) => {
+               
               });
             swal.fire("Deleted!", "Your file has been deleted.", "success");
+            
           }
         });
     },
-    searchRole(value){
-      this.keySearch=value;
-      console.log(this.keySearch)
-      axios.get("http://localhost:8000/api/roles/search?name="+this.keySearch, {
-                headers: { Authorization: this.$auth.getToken("local") }
-              }).then(res => {
-        this.dataUser = res.data;
-       
-      });
-    }
   },
   
 }

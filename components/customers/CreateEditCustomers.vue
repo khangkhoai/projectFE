@@ -9,7 +9,16 @@
           <CCol sm="12">
             <CInput
               label="Name"
-              v-model="dataProduct.name"
+              v-model="dataForm.name"
+              placeholder="Enter your name"
+            />
+          </CCol>
+        </CRow>
+       <CRow>
+          <CCol sm="12">
+            <CInput
+              label="Email"
+              v-model="dataForm.email"
               placeholder="Enter your name"
             />
           </CCol>
@@ -17,40 +26,8 @@
         <CRow>
           <CCol sm="12">
             <CInput
-              label="Description"
-              v-model="dataProduct.desc"
-              placeholder="Enter your name"
-            />
-          </CCol>
-        </CRow>
-        <CRow>
-          <CCol sm="6">
-            <CInput
-              label="Price"
-              v-model="dataProduct.price"
-              placeholder="Enter your name"
-            />
-          </CCol>
-          <CCol sm="6">
-            <CInput
-              label="Amount"
-              v-model="dataProduct.amount"
-              placeholder="Enter your name"
-            />
-          </CCol>
-        </CRow>
-        <CRow>
-          <CCol sm="6">
-            <CInput
-              label="Discount"
-              v-model="dataProduct.discount"
-              placeholder="Enter your name"
-            />
-          </CCol>
-          <CCol sm="6">
-            <CInput
-              label="Sale Price"
-              v-model="dataProduct.sale_price"
+              label="Password"
+              v-model="dataForm.password"
               placeholder="Enter your name"
             />
           </CCol>
@@ -58,25 +35,19 @@
         <CRow>
           <CCol sm="12">
             <CInput
-              label="Thumb"
-              v-model="dataProduct.thumb"
+              label="Phone"
+              v-model="dataForm.phone"
               placeholder="Enter your name"
             />
           </CCol>
         </CRow>
         <CRow>
           <CCol sm="12">
-          <label for="source">Category</label>
-               <select id="category_id" v-model="dataProduct.category_id" class="form-control">
-
-              <option
-                v-for="(item, index) in dataCatagory"
-                :key="index"
-                :value="item.id"
-              >
-                {{ item.name }}
-              </option>
-            </select>
+            <CInput
+              label="Address"
+              v-model="dataForm.address"
+              placeholder="Enter your name"
+            />
           </CCol>
         </CRow>
       </CCardBody>
@@ -92,7 +63,7 @@
           v-else
           color="primary"
           class="btn-click"
-          @click="editProduct(dataProduct.id)"
+          @click="editProduct(dataForm.id)"
         >
           Update
         </CButton>
@@ -107,12 +78,12 @@ export default {
   components: {},
   data() {
     return {
-      dataProduct: {
+      dataForm: {
         id: "",
         name: "",
         permission: []
       },
-      dataCatagory : []
+      dataPermission: []
     };
   },
   props: {
@@ -121,9 +92,9 @@ export default {
   methods: {
     addProduct() {
       axios
-        .post("http://127.0.0.1:8000/api/product/", this.dataProduct)
+        .post("http://127.0.0.1:8000/api/customer/", this.dataForm)
         .then(res => {
-          this.$router.push("/product");
+          this.$router.push("/customer");
           swal.fire({
             position: "center",
             icon: "success",
@@ -135,21 +106,21 @@ export default {
     },
      getProductByID(id) {
       axios
-        .get("http://127.0.0.1:8000/api/product/" + id )
+        .get("http://127.0.0.1:8000/api/customer/" + id )
         .then(res => {
-          this.dataProduct = res.data;
-          console.log(this.dataProduct);
+          this.dataForm = res.data;
+          console.log(this.dataForm);
         });
     },
     editProduct(id) {
       axios
         .put(
-          "http://127.0.0.1:8000/api/product/" + id,
-          this.dataProduct
+          "http://127.0.0.1:8000/api/customer/" + id,
+          this.dataForm
           
         )
         .then(res => {
-          this.$router.push("/product");
+          this.$router.push("/customer");
           swal.fire({
             position: "center",
             icon: "success",
@@ -159,17 +130,13 @@ export default {
           });
         });
     },
-    getData() {
-      axios.get("http://127.0.0.1:8000/api/category").then((res) => {
-        this.dataCatagory = res.data;
-      });
-    },
+    
   },
   mounted() {
     if (this.$route.params.id !== null) {
       this.getProductByID(this.$route.params.id);
     }
-    this.getData()
+    
   }
 };
 </script>

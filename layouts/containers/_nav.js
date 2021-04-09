@@ -16,7 +16,7 @@ export default [{
         {
             _name: 'CSidebarNavItem',
             name: 'Category',
-            to: '/task',
+            to: '/category',
             icon: 'cil-drop'
         },
 
@@ -26,6 +26,23 @@ export default [{
             to: '/user',
             icon: 'cil-pencil'
         },
-        
+        {
+            _name: 'CSidebarNavItem',
+            name: 'Customer',
+            to: '/customer',
+            icon: 'cil-pencil'
+        },
+        {
+            _name: 'CSidebarNavItem',
+            name: 'Order',
+            to: '/order',
+            icon: 'cil-pencil'
+        },
+        {
+            _name: 'CSidebarNavItem',
+            name: 'Order Detail',
+            to: '/order_detail',
+            icon: 'cil-pencil'
+        },
     ]
 }]
