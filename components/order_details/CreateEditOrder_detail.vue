@@ -65,6 +65,7 @@
 </template>
 <script>
 import axios from "axios";
+import { URL } from '~/constant/constant';
 export default {
   name: "new",
   components: {},
@@ -84,7 +85,7 @@ export default {
   methods: {
     addProduct() {
       axios
-        .post("http://127.0.0.1:8000/api/order_detail/", this.dataForm)
+        .post(URL+"order_detail/", this.dataForm)
         .then(res => {
           this.$router.push("/order");
           swal.fire({
@@ -98,7 +99,7 @@ export default {
     },
      getProductByID(id) {
       axios
-        .get("http://127.0.0.1:8000/api/order_detail/" + id )
+        .get(URL+"order_detail/" + id )
         .then(res => {
           this.dataForm = res.data;
           console.log(this.dataForm);
@@ -107,7 +108,7 @@ export default {
     editProduct(id) {
       axios
         .put(
-          "http://127.0.0.1:8000/api/order_detail/" + id,
+          URL+"order_detail/" + id,
           this.dataForm
           
         )

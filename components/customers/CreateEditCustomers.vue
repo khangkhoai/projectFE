@@ -73,6 +73,7 @@
 </template>
 <script>
 import axios from "axios";
+import { URL } from '~/constant/constant';
 export default {
   name: "new",
   components: {},
@@ -92,7 +93,7 @@ export default {
   methods: {
     addProduct() {
       axios
-        .post("http://127.0.0.1:8000/api/customer/", this.dataForm, {
+        .post(URL + "customer/", this.dataForm, {
                 headers: { Authorization: this.$auth.getToken("local") }
               } )
         .then(res => {
@@ -108,7 +109,7 @@ export default {
     },
      getProductByID(id) {
       axios
-        .get("http://127.0.0.1:8000/api/customer/" + id , {
+        .get(URL + "customer/" + id , {
                 headers: { Authorization: this.$auth.getToken("local") }
               } )
         .then(res => {
@@ -119,7 +120,7 @@ export default {
     editProduct(id) {
       axios
         .put(
-          "http://127.0.0.1:8000/api/customer/" + id,this.dataForm, {
+          URL + "customer/" + id,this.dataForm, {
                 headers: { Authorization: this.$auth.getToken("local") }
               }   
         )

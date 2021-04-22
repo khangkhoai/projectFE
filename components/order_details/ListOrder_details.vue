@@ -35,6 +35,7 @@
 <script>
 import axios from 'axios'
 import { freeSet } from "@coreui/icons";
+import { URL } from '~/constant/constant';
 import swal from "sweetalert2";
 const fields = [
     { key: 'id', label: 'ID',_style:'min-width:50px' },
@@ -75,7 +76,7 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios.delete('http://127.0.0.1:8000/api/order_detail/' + id)
+            axios.delete(URL+"order_detail/" + id)
               .then((res) => {
                
               });

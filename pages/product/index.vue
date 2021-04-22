@@ -7,6 +7,7 @@
 import ListProducts from "@/components/products/ListProducts";
 
 import axios from 'axios'
+import { URL } from '~/constant/constant';
 export default {
   components : {
     ListProducts,
@@ -19,7 +20,7 @@ export default {
   },
   methods: {
     listData(){
-       axios.get("http://127.0.0.1:8000/api/product/", {
+       axios.get(URL +"product/", {
                 headers: { Authorization: this.$auth.getToken("local") }
               }).then(res =>{this.listRoles = res.data;  console.log(res.data);
       }).catch(err => {console.log(err)}) 

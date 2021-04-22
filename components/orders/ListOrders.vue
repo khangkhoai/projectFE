@@ -15,6 +15,9 @@
           hover
           pagination
         >
+        <template #status="{ item }">
+          <td>{{ getStatus(item.status) }}</td>
+        </template>
         <template #method="{ item }">
            <td class="py-2">
               <CButton color="success">
@@ -36,14 +39,16 @@
 import axios from 'axios'
 import { freeSet } from "@coreui/icons";
 import swal from "sweetalert2";
+import { URL } from '~/constant/constant';
+import { STATUS } from '~/constant/constant';
 const fields = [
     { key: 'id', label: 'ID',_style:'min-width:50px' },
     { key: 'customer_id', _style:'min-width:50px;' },
     { key: 'name', label: 'ProductName',_style:'min-width:150px' },
     { key: 'date', _style:'min-width:50px;' },
-    { key: 'status', _style:'min-width:50px;' },
     { key: 'address', _style:'min-width:50px;' },
     { key: 'total_price', _style:'min-width:50px;' },
+    { key: 'status', _style:'min-width:50px;' },
     { key: "method", label: "Method", _style: "min-width:100px;" },
 ]
 export default {
@@ -58,8 +63,8 @@ export default {
   data () {
     return {
       fields : fields ,
-      keySearch : ''
-      
+      keySearch : '',
+      status: STATUS,
     }
   },
   methods: {
@@ -77,7 +82,7 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios.delete('http://127.0.0.1:8000/api/order/' + id)
+            axios.delete(URL + 'order/' + id)
               .then((res) => {
                
               });
@@ -85,6 +90,13 @@ export default {
             
           }
         });
+    },
+    getStatus(id) {
+      return this.status.find((stt, index) => {
+        if (index == id) {
+          return stt;
+        }
+      });
     },
   },
   

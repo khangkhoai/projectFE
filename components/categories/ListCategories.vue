@@ -67,6 +67,7 @@
 import axios from 'axios'
 import { freeSet } from "@coreui/icons";
 import swal from "sweetalert2";
+import { URL } from '~/constant/constant';
 const fields = [
     { key: 'id', label: 'ID',_style:'min-width:50px' },
     { key: 'name', label: 'ProductName',_style:'min-width:150px' },
@@ -123,7 +124,7 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios.delete('http://127.0.0.1:8000/api/category/' + id, {
+            axios.delete(URL +"category/" + id, {
                 headers: { Authorization: this.$auth.getToken("local") }
               })
               .then((res) => {
@@ -141,15 +142,18 @@ export default {
         this.collapseDuration = 0;
       });
     },
+    /**
+     * get product by category
+     * @param Integer id
+     */
     getDetails(id) {
-      axios.get("http://localhost:8000/api/category/get/" + id, {
+      axios.get(URL + "category/get/" + id, {
             headers: {
               Authorization: `${$nuxt.$auth.getToken("local")}`,
             },
           }).then(res => {
         this.listDetails = res.data;
         console.log(res.data);
-        // this.page = res.data;
       });
     }
   },

@@ -7,6 +7,7 @@
 import ListCategories from "@/components/customers/ListCustomers";
 
 import axios from 'axios'
+import { URL } from '~/constant/constant';
 export default {
   components : {
     ListCategories,
@@ -19,7 +20,7 @@ export default {
   },
   methods: {
     listCategory(){
-       axios.get("http://127.0.0.1:8000/api/customer/", {
+       axios.get(URL + "customer/", {
                 headers: { Authorization: this.$auth.getToken("local") }
               }).then(res =>{this.listData = res.data;  console.log(res.data);
       }).catch(err => {console.log(err)}) 

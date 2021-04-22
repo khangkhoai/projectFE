@@ -48,6 +48,7 @@
 <script>
 import axios from 'axios'
 import { freeSet } from "@coreui/icons";
+import {URL} from '../../constant/constant';
 import swal from "sweetalert2";
 const fields = [
     { key: 'id', label: 'ID',_style:'min-width:50px' },
@@ -92,7 +93,7 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            axios.delete('http://127.0.0.1:8000/api/product/' + id, {
+            axios.delete( URL +"product/" + id, {
                 headers: { Authorization: this.$auth.getToken("local") }
               })
               .then((res) => {
@@ -101,16 +102,7 @@ export default {
           }
         });
     },
-    searchRole(value){
-      this.keySearch=value;
-      console.log(this.keySearch)
-      axios.get("http://localhost:8000/api/roles/search?name="+this.keySearch, {
-                headers: { Authorization: this.$auth.getToken("local") }
-              }).then(res => {
-        this.dataUser = res.data;
-       
-      });
-    }
+    
   },
   
 }

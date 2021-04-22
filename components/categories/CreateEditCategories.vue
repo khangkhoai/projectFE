@@ -46,6 +46,7 @@
 </template>
 <script>
 import axios from "axios";
+import { URL } from '~/constant/constant';
 export default {
   name: "new",
   components: {},
@@ -65,7 +66,7 @@ export default {
   methods: {
     addProduct() {
       axios
-        .post("http://127.0.0.1:8000/api/category/", this.dataForm, {
+        .post(URL +"category/", this.dataForm, {
                 headers: { Authorization: this.$auth.getToken("local") }
               })
         .then(res => {
@@ -81,7 +82,7 @@ export default {
     },
      getProductByID(id) {
       axios
-        .get("http://127.0.0.1:8000/api/category/" + id , {
+        .get(URL +"category/"+ id , {
                 headers: { Authorization: this.$auth.getToken("local") }
               })
         .then(res => {
@@ -92,7 +93,7 @@ export default {
     editProduct(id) {
       axios
         .put(
-          "http://127.0.0.1:8000/api/category/" + id,
+          URL +"category/" + id,
           this.dataForm, {
                 headers: { Authorization: this.$auth.getToken("local") }
               } 

@@ -70,7 +70,8 @@
             </select>
           </CCol>
            <CCol sm="6">
-            <CInputFile
+           
+           <CInputFile
               label="Thumb"
               v-model="dataProduct.thumb"
               placeholder="Enter your name"
@@ -90,7 +91,7 @@
           v-else
           color="primary"
           class="btn-click"
-          @click="editProduct(dataProduct.id)"
+          @click="editProduct(dataProduct)"
         >
           Update
         </CButton>
@@ -100,6 +101,7 @@
 </template>
 <script>
 import swal from "sweetalert2";
+import {URL} from '../../constant/constant';
 import axios from "axios";
 export default {
   name: "new",
@@ -124,8 +126,7 @@ export default {
     title: ""
   },
   methods: {
-    addProduct(dataProduct) {
-      console.warn(' dataProduct.thumb.target.files[0]',  dataProduct.thumb.target.files[0]);
+    async addProduct(dataProduct) {
       const data = new FormData();
       data.append("category_id", dataProduct.category_id);
       data.append("name", dataProduct.name);
@@ -133,28 +134,26 @@ export default {
       data.append("price", dataProduct.price);
       data.append("discount", dataProduct.discount);
       data.append("amount", dataProduct.amount);
-      data.append("thumb", dataProduct.thumb.target.files[0]);
-      axios
-        .post("http://127.0.0.1:8000/api/product/", data,{
+      data.append("thumb",  dataProduct.thumb.target.files[0]);
+      console.log(data.get('thumb'))
+      const res = await axios
+        .post( URL +"product/", data,{
           headers: {
             Authorization: this.$auth.getToken("local"),
             "Content-type": "multipart/form-data",
           },
         })
-        .then(res => {
-          this.$router.push("/product");
-          swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Successfully Added",
-            showConfirmButton: false,
-            timer: 1500
-          });
-        });
+        if(res) {
+          this.$router.push('/product')
+      }
     },
-     getProductByID(id) {
+    getFile(files) {
+      this.dataProduct.thumb = files
+    },
+    getProductByID(id) {
+      
       axios
-        .get("http://127.0.0.1:8000/api/product/" + id , {
+        .get(URL +"product/" + id , {
                 headers: { Authorization: this.$auth.getToken("local") }
               })
         .then(res => {
@@ -162,16 +161,28 @@ export default {
           console.log(this.dataProduct);
         });
     },
-    editProduct(id) {
+    editProduct(dataProduct) {
+      
+      let data = new FormData();
+      data.append("category_id", dataProduct.category_id);
+      data.append("name", dataProduct.name);
+      data.append("desc", dataProduct.desc);
+      data.append("price", dataProduct.price);
+      data.append("discount", dataProduct.discount);
+      data.append("amount", dataProduct.amount);
+      data.append("thumb", dataProduct.thumb);
+      console.log(dataProduct.name)
       axios
-        .put(
-          "http://127.0.0.1:8000/api/product/" + id,
-          this.dataProduct, {
-                headers: { Authorization: this.$auth.getToken("local") }
-              }
-          
+        .post(
+          URL +"product/" + dataProduct.id,
+         data,{
+          headers: {
+            Authorization: this.$auth.getToken("local"),
+            "Content-type": "multipart/form-data",
+          },
+          }   
         )
-        .then(res => {
+       .then(res => {
           this.$router.push("/product");
           swal.fire({
             position: "center",
@@ -183,7 +194,7 @@ export default {
         });
     },
     getData() {
-      axios.get("http://127.0.0.1:8000/api/category", {
+      axios.get(URL + "category", {
                 headers: { Authorization: this.$auth.getToken("local") }
               }).then((res) => {
         this.dataCatagory = res.data;
