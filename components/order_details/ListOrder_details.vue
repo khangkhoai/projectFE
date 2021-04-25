@@ -22,7 +22,7 @@
                   <CIcon :content="$options.freeSet.cilPencil" />
                 </nuxt-link>
               </CButton>
-              <CButton color="danger" @click="deleteCustomer(item.id)">
+              <CButton color="danger" @click="deleteOrderDetail(item.id)">
                 <CIcon :content="$options.freeSet.cilTrash" />
               </CButton>
             </td>
@@ -62,7 +62,7 @@ export default {
     }
   },
   methods: {
-    deleteCustomer(id)
+    deleteOrderDetail(id)
     {
       swal
         .fire({

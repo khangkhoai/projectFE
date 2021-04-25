@@ -14,7 +14,7 @@
             />
           </CCol>
         </CRow>
-       <CRow>
+        <CRow>
           <CCol sm="12">
             <CInput
               label="Email"
@@ -55,7 +55,7 @@
         <CButton
           v-if="!this.$route.params.id"
           color="primary"
-          @click="addProduct()"
+          @click="addCustomer()"
         >
           Submit
         </CButton>
@@ -63,7 +63,7 @@
           v-else
           color="primary"
           class="btn-click"
-          @click="editProduct(dataForm.id)"
+          @click="editCustomer(dataForm.id)"
         >
           Update
         </CButton>
@@ -73,7 +73,7 @@
 </template>
 <script>
 import axios from "axios";
-import { URL } from '~/constant/constant';
+import { URL } from "~/constant/constant";
 export default {
   name: "new",
   components: {},
@@ -91,11 +91,11 @@ export default {
     title: ""
   },
   methods: {
-    addProduct() {
+    addCustomer() {
       axios
         .post(URL + "customer/", this.dataForm, {
-                headers: { Authorization: this.$auth.getToken("local") }
-              } )
+          headers: { Authorization: this.$auth.getToken("local") }
+        })
         .then(res => {
           this.$router.push("/customer");
           swal.fire({
@@ -107,23 +107,25 @@ export default {
           });
         });
     },
-     getProductByID(id) {
+     /**
+     * get customer by id
+     * @param Integer id
+     */
+    getCustomerByID(id) {
       axios
-        .get(URL + "customer/" + id , {
-                headers: { Authorization: this.$auth.getToken("local") }
-              } )
+        .get(URL + "customer/" + id, {
+          headers: { Authorization: this.$auth.getToken("local") }
+        })
         .then(res => {
           this.dataForm = res.data;
           console.log(this.dataForm);
         });
     },
-    editProduct(id) {
+    editCustomer(id) {
       axios
-        .put(
-          URL + "customer/" + id,this.dataForm, {
-                headers: { Authorization: this.$auth.getToken("local") }
-              }   
-        )
+        .put(URL + "customer/" + id, this.dataForm, {
+          headers: { Authorization: this.$auth.getToken("local") }
+        })
         .then(res => {
           this.$router.push("/customer");
           swal.fire({
@@ -134,14 +136,12 @@ export default {
             timer: 1500
           });
         });
-    },
-    
+    }
   },
   mounted() {
     if (this.$route.params.id !== null) {
-      this.getProductByID(this.$route.params.id);
+      this.getCustomerByID(this.$route.params.id);
     }
-    
   }
 };
 </script>

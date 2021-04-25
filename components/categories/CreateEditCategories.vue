@@ -28,7 +28,7 @@
         <CButton
           v-if="!this.$route.params.id"
           color="primary"
-          @click="addProduct()"
+          @click="addCategory()"
         >
           Submit
         </CButton>
@@ -36,7 +36,7 @@
           v-else
           color="primary"
           class="btn-click"
-          @click="editProduct(dataForm.id)"
+          @click="editCategory(dataForm.id)"
         >
           Update
         </CButton>
@@ -46,7 +46,7 @@
 </template>
 <script>
 import axios from "axios";
-import { URL } from '~/constant/constant';
+import { URL } from "~/constant/constant";
 export default {
   name: "new",
   components: {},
@@ -64,11 +64,11 @@ export default {
     title: ""
   },
   methods: {
-    addProduct() {
+    addCategory() {
       axios
-        .post(URL +"category/", this.dataForm, {
-                headers: { Authorization: this.$auth.getToken("local") }
-              })
+        .post(URL + "category/", this.dataForm, {
+          headers: { Authorization: this.$auth.getToken("local") }
+        })
         .then(res => {
           this.$router.push("/category");
           swal.fire({
@@ -80,24 +80,21 @@ export default {
           });
         });
     },
-     getProductByID(id) {
+    getCategoryByID(id) {
       axios
-        .get(URL +"category/"+ id , {
-                headers: { Authorization: this.$auth.getToken("local") }
-              })
+        .get(URL + "category/" + id, {
+          headers: { Authorization: this.$auth.getToken("local") }
+        })
         .then(res => {
           this.dataForm = res.data;
           console.log(this.dataForm);
         });
     },
-    editProduct(id) {
+    editCategory(id) {
       axios
-        .put(
-          URL +"category/" + id,
-          this.dataForm, {
-                headers: { Authorization: this.$auth.getToken("local") }
-              } 
-        )
+        .put(URL + "category/" + id, this.dataForm, {
+          headers: { Authorization: this.$auth.getToken("local") }
+        })
         .then(res => {
           this.$router.push("/category");
           swal.fire({
@@ -108,14 +105,12 @@ export default {
             timer: 1500
           });
         });
-    },
-    
+    }
   },
   mounted() {
     if (this.$route.params.id !== null) {
       this.getProductByID(this.$route.params.id);
     }
-    
   }
 };
 </script>

@@ -4,19 +4,22 @@
       <CCardHeader>
         <h3>List Category</h3>
       </CCardHeader>
-      <CCardBody >
+      <CCardBody>
         <CButton color="primary" class="m-2 btn_add">
-          <nuxt-link to="/category/add" class="text-white d-block"> + Add</nuxt-link>
+          <nuxt-link to="/category/add" class="text-white d-block">
+            + Add</nuxt-link
+          >
         </CButton>
-      <CDataTable :items="listData"
+        <CDataTable
+          :items="listData"
           :fields="fields"
           items-per-page-select
           :items-per-page="5"
           hover
           pagination
         >
-        <template #method="{ item }">
-           <td class="py-2">
+          <template #method="{ item }">
+            <td class="py-2">
               <CButton color="success">
                 <nuxt-link :to="`/category/${item.id}`">
                   <CIcon :content="$options.freeSet.cilPencil" />
@@ -26,92 +29,88 @@
                 <CIcon :content="$options.freeSet.cilTrash" />
               </CButton>
             </td>
-        </template>
-         <template #show_details="{ item, index }">
+          </template>
+          <template #show_details="{ item, index }">
             <td class="py-2">
               <CButton
                 color="primary"
                 variant="outline"
                 square
                 size="sm"
-                @click="toggleDetails(item, index),getDetails(item.id)"
+                @click="toggleDetails(item, index), getDetails(item.id)"
               >
                 {{ Boolean(item._toggled) ? "Hide" : "Show" }}
               </CButton>
             </td>
           </template>
-           <template #details="{ item }">
+          <template #details="{ item }">
             <CCollapse
               :show="Boolean(item._toggled)"
               :duration="collapseDuration"
             >
               <CCardBody>
                 <h6>List Task</h6>
-                <CDataTable 
-                :items="listDetails"
-                :fields="fields1"
-                hover
-                pagination
-                striped
+                <CDataTable
+                  :items="listDetails"
+                  :fields="fields1"
+                  hover
+                  pagination
+                  striped
                 >
                 </CDataTable>
               </CCardBody>
             </CCollapse>
-          </template> 
-      </CDataTable>
+          </template>
+        </CDataTable>
       </CCardBody>
     </CCard>
-  </div>  
+  </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 import { freeSet } from "@coreui/icons";
 import swal from "sweetalert2";
-import { URL } from '~/constant/constant';
+import { URL } from "~/constant/constant";
 const fields = [
-    { key: 'id', label: 'ID',_style:'min-width:50px' },
-    { key: 'name', label: 'ProductName',_style:'min-width:150px' },
-    { key: 'thumb', _style:'min-width:50px;' },
-    { key: "method", label: "Method", _style: "min-width:100px;" },
-    { key: "show_details", label: "Method", _style: "min-width:100px;" },
-   
-]
+  { key: "id", label: "ID", _style: "min-width:50px" },
+  { key: "name", label: "ProductName", _style: "min-width:150px" },
+  { key: "thumb", _style: "min-width:50px;" },
+  { key: "method", label: "Method", _style: "min-width:100px;" },
+  { key: "show_details", label: "Method", _style: "min-width:100px;" }
+];
 const fields1 = [
-    { key: 'id', label: 'ID',_style:'min-width:50px' },
-    { key: "thumb",_style:'width:100px;'},
-    { key: 'name', label: 'ProductName',_style:'min-width:100px' },
-    { key: 'desc', _style:'min-width:50px;' },
-    { key: 'price', _style:'min-width:50px;' },
-    { key: 'amount', _style:'min-width:50px;' },
-    { key: 'discount', _style:'min-width:50px;' },
-    { key: 'sale_price', _style:'min-width:50px;' },
-    { key: 'category_id', _style:'min-width:50px;' },
-    { key: "method", label: "Method", _style: "min-width:100px;" },
-]
+  { key: "id", label: "ID", _style: "min-width:50px" },
+  { key: "thumb", _style: "width:100px;" },
+  { key: "name", label: "ProductName", _style: "min-width:100px" },
+  { key: "desc", _style: "min-width:50px;" },
+  { key: "price", _style: "min-width:50px;" },
+  { key: "amount", _style: "min-width:50px;" },
+  { key: "discount", _style: "min-width:50px;" },
+  { key: "sale_price", _style: "min-width:50px;" },
+  { key: "category_id", _style: "min-width:50px;" },
+  { key: "method", label: "Method", _style: "min-width:100px;" }
+];
 export default {
-  
   freeSet,
-   props: {
+  props: {
     listData: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     listDetails: {
       type: Array,
-      default: () => [],
+      default: () => []
     }
   },
-  data () {
+  data() {
     return {
-      fields : fields ,
-      fields1 : fields1 ,
-      keySearch : ''
-      
-    }
+      fields: fields,
+      fields1: fields1,
+      keySearch: ""
+    };
   },
   methods: {
-    deleteCategory(id)
-    {
+    deleteCategory(id) {
       swal
         .fire({
           title: "Are you sure?",
@@ -120,18 +119,16 @@ export default {
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
+          confirmButtonText: "Yes, delete it!"
         })
-        .then((result) => {
+        .then(result => {
           if (result.isConfirmed) {
-            axios.delete(URL +"category/" + id, {
+            axios
+              .delete(URL + "category/" + id, {
                 headers: { Authorization: this.$auth.getToken("local") }
               })
-              .then((res) => {
-               
-              });
+              .then(res => {});
             swal.fire("Deleted!", "Your file has been deleted.", "success");
-            
           }
         });
     },
@@ -147,19 +144,19 @@ export default {
      * @param Integer id
      */
     getDetails(id) {
-      axios.get(URL + "category/get/" + id, {
-            headers: {
-              Authorization: `${$nuxt.$auth.getToken("local")}`,
-            },
-          }).then(res => {
-        this.listDetails = res.data;
-        console.log(res.data);
-      });
+      axios
+        .get(URL + "category/get/" + id, {
+          headers: {
+            Authorization: `${$nuxt.$auth.getToken("local")}`
+          }
+        })
+        .then(res => {
+          this.listDetails = res.data;
+          console.log(res.data);
+        });
     }
-  },
-  
-}
+  }
+};
 </script>
 
-<style>
-</style>
+<style></style>

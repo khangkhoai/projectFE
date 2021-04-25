@@ -1,6 +1,6 @@
 <template>
   <div>
-    <list-products :listRoles="listRoles"></list-products>
+    <list-products :listData="listData"></list-products>
   </div>  
 </template>
 <script>
@@ -14,21 +14,21 @@ export default {
   },
   data () {
     return {
-      listRoles:[],
+      listData: [] ,
       search: ''
     }
   },
   methods: {
-    listData(){
-       axios.get(URL +"product/", {
+    listProduct(){
+       axios.get(URL +"product/getProduct", {
                 headers: { Authorization: this.$auth.getToken("local") }
-              }).then(res =>{this.listRoles = res.data;  console.log(res.data);
+              }).then(res =>{this.listData = res.data;  console.log(res.data);
       }).catch(err => {console.log(err)}) 
     }, 
     
   },
   mounted () {
-    this.listData();   
+    this.listProduct();   
   },
 }
 </script>

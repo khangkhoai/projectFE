@@ -47,7 +47,7 @@
         <CButton
           v-if="!this.$route.params.id"
           color="primary"
-          @click="addProduct()"
+          @click="addOrderDetail()"
         >
           Submit
         </CButton>
@@ -55,7 +55,7 @@
           v-else
           color="primary"
           class="btn-click"
-          @click="editProduct(dataForm.id)"
+          @click="editOrderDetail(dataForm.id)"
         >
           Update
         </CButton>
@@ -83,7 +83,7 @@ export default {
     title: ""
   },
   methods: {
-    addProduct() {
+    addOrderDetail() {
       axios
         .post(URL+"order_detail/", this.dataForm)
         .then(res => {
@@ -97,7 +97,7 @@ export default {
           });
         });
     },
-     getProductByID(id) {
+     getOrderDetailByID(id) {
       axios
         .get(URL+"order_detail/" + id )
         .then(res => {
@@ -105,7 +105,7 @@ export default {
           console.log(this.dataForm);
         });
     },
-    editProduct(id) {
+    editOrderDetail(id) {
       axios
         .put(
           URL+"order_detail/" + id,
@@ -127,7 +127,7 @@ export default {
   },
   mounted() {
     if (this.$route.params.id !== null) {
-      this.getProductByID(this.$route.params.id);
+      this.getOrderDetailByID(this.$route.params.id);
     }
     
   }

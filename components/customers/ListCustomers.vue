@@ -4,19 +4,22 @@
       <CCardHeader>
         <h3>List Customer</h3>
       </CCardHeader>
-      <CCardBody >
+      <CCardBody>
         <CButton color="primary" class="m-2 btn_add">
-          <nuxt-link to="/customer/add" class="text-white d-block"> + Add</nuxt-link>
+          <nuxt-link to="/customer/add" class="text-white d-block">
+            + Add</nuxt-link
+          >
         </CButton>
-      <CDataTable :items="listData"
+        <CDataTable
+          :items="listData"
           :fields="fields"
           items-per-page-select
           :items-per-page="5"
           hover
           pagination
         >
-        <template #method="{ item }">
-           <td class="py-2">
+          <template #method="{ item }">
+            <td class="py-2">
               <CButton color="success">
                 <nuxt-link :to="`/customer/${item.id}`">
                   <CIcon :content="$options.freeSet.cilPencil" />
@@ -26,46 +29,43 @@
                 <CIcon :content="$options.freeSet.cilTrash" />
               </CButton>
             </td>
-        </template> 
-      </CDataTable>
+          </template>
+        </CDataTable>
       </CCardBody>
     </CCard>
-  </div>  
+  </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 import { freeSet } from "@coreui/icons";
-import { URL } from '~/constant/constant';
+import { URL } from "~/constant/constant";
 import swal from "sweetalert2";
 const fields = [
-    { key: 'id', label: 'ID',_style:'min-width:50px' },
-    { key: 'name', label: 'ProductName',_style:'min-width:150px' },
-    { key: 'email', _style:'min-width:50px;' },
-    { key: 'password', _style:'min-width:50px;' },
-    { key: 'phone', _style:'min-width:50px;' },
-    { key: 'address', _style:'min-width:50px;' },
-    { key: "method", label: "Method", _style: "min-width:100px;" },
-    { key: "detail", label: "Detail", _style: "min-width:100px;" },
-]
+  { key: "id", label: "ID", _style: "min-width:50px" },
+  { key: "name", label: "ProductName", _style: "min-width:150px" },
+  { key: "email", _style: "min-width:50px;" },
+  { key: "password", _style: "min-width:50px;" },
+  { key: "phone", _style: "min-width:50px;" },
+  { key: "address", _style: "min-width:50px;" },
+  { key: "method", label: "Method", _style: "min-width:100px;" },
+  { key: "detail", label: "Detail", _style: "min-width:100px;" }
+];
 export default {
-  
   freeSet,
-   props: {
+  props: {
     listData: {
       type: Array,
-      default: () => [],
-    },
-  },
-  data () {
-    return {
-      fields : fields ,
-      keySearch : ''
-      
+      default: () => []
     }
   },
+  data() {
+    return {
+      fields: fields,
+      keySearch: ""
+    };
+  },
   methods: {
-    deleteCustomer(id)
-    {
+    deleteCustomer(id) {
       swal
         .fire({
           title: "Are you sure?",
@@ -74,25 +74,21 @@ export default {
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
+          confirmButtonText: "Yes, delete it!"
         })
-        .then((result) => {
+        .then(result => {
           if (result.isConfirmed) {
-            axios.delete(URL + "customer/" + id, {
+            axios
+              .delete(URL + "customer/" + id, {
                 headers: { Authorization: this.$auth.getToken("local") }
-              } )
-              .then((res) => {
-               
-              });
+              })
+              .then(res => {});
             swal.fire("Deleted!", "Your file has been deleted.", "success");
-            
           }
         });
-    },
-  },
-  
-}
+    }
+  }
+};
 </script>
 
-<style>
-</style>
+<style></style>

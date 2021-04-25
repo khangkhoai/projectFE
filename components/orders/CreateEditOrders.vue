@@ -5,7 +5,7 @@
         {{ title }}
       </CCardHeader>
       <CCardBody>
-         <CRow>
+        <CRow>
           <CCol sm="12">
             <CInput
               label="Customer ID"
@@ -23,7 +23,7 @@
             />
           </CCol>
         </CRow>
-       <CRow>
+        <CRow>
           <CCol sm="12">
             <CInput
               label="Date"
@@ -34,11 +34,21 @@
         </CRow>
         <CRow>
           <CCol sm="12">
-            <CInput
-              label="Status"
+            <label for="source">STATUS</label>
+            <select id="status" v-model="dataForm.status" class="form-control">
+              <option
+                v-for="(item, index) in STATUS"
+                :key="index"
+                :value="index"
+              >
+                {{ index }}
+              </option>
+            </select>
+            <!-- <CInput
+              label="Date"
               v-model="dataForm.status"
               placeholder="Enter your name"
-            />
+            /> -->
           </CCol>
         </CRow>
         <CRow>
@@ -59,7 +69,7 @@
             />
           </CCol>
         </CRow>
-         <CRow>
+        <CRow>
           <CCol sm="12">
             <CInput
               label="Total Price"
@@ -91,7 +101,8 @@
 </template>
 <script>
 import axios from "axios";
-import { URL } from '~/constant/constant';
+import { URL } from "~/constant/constant";
+import { DATA_STATUS } from "~/constant/constant";
 export default {
   name: "new",
   components: {},
@@ -100,7 +111,8 @@ export default {
       dataForm: {
         id: "",
         name: "",
-        permission: []
+        permission: [],
+        STATUS: DATA_STATUS
       },
       dataPermission: []
     };
@@ -110,52 +122,40 @@ export default {
   },
   methods: {
     addProduct() {
-      axios
-        .post(URL+"order/", this.dataForm)
-        .then(res => {
-          this.$router.push("/order");
-          swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Successfully Added",
-            showConfirmButton: false,
-            timer: 1500
-          });
+      axios.post(URL + "order/", this.dataForm).then(res => {
+        this.$router.push("/order");
+        swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Successfully Added",
+          showConfirmButton: false,
+          timer: 1500
         });
+      });
     },
-     getProductByID(id) {
-      axios
-        .get(URL+"order/" + id )
-        .then(res => {
-          this.dataForm = res.data;
-          console.log(this.dataForm);
-        });
+    getProductByID(id) {
+      axios.get(URL + "order/" + id).then(res => {
+        this.dataForm = res.data;
+        console.log(this.dataForm);
+      });
     },
     editProduct(id) {
-      axios
-        .put(
-          URL+"order/" + id,
-          this.dataForm
-          
-        )
-        .then(res => {
-          this.$router.push("/order");
-          swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Successfully Added",
-            showConfirmButton: false,
-            timer: 1500
-          });
+      axios.put(URL + "order/" + id, this.dataForm).then(res => {
+        this.$router.push("/order");
+        swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Successfully Added",
+          showConfirmButton: false,
+          timer: 1500
         });
-    },
-    
+      });
+    }
   },
   mounted() {
     if (this.$route.params.id !== null) {
       this.getProductByID(this.$route.params.id);
     }
-    
   }
 };
 </script>

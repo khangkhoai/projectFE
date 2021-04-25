@@ -4,22 +4,29 @@
       <CCardHeader>
         <h3>List Product</h3>
       </CCardHeader>
-      <CCardBody >
+      <CCardBody>
         <CButton color="primary" class="m-2 btn_add">
-          <nuxt-link to="/product/add" class="text-white d-block"> + Add</nuxt-link>
+          <nuxt-link to="/product/add" class="text-white d-block">
+            + Add</nuxt-link
+          >
         </CButton>
-      <CDataTable :items="listRoles"
+        <CDataTable
+          :items="listData"
           :fields="fields"
-          tableFilter
           items-per-page-select
-          :items-per-page="5"
+          :items-per-page="6"
           hover
           pagination
         >
-        <template #thumb="{ item }">
+          <template #thumb="{ item }">
             <td class="thumb">
-              <img v-bind:src="'http://127.0.0.1:8000/' + item.thumb"  alt="" width="1%"
-                height="1%"  class="c-sidebar-brand-full img-fluid w-75">
+              <img
+                v-bind:src="'http://127.0.0.1:8000/' + item.thumb"
+                alt=""
+                width="1%"
+                height="1%"
+                class="c-sidebar-brand-full img-fluid w-75"
+              />
               <!-- <img
                 width="1%"
                 height="1%"
@@ -27,9 +34,9 @@
                 class="c-sidebar-brand-full img-fluid w-75"
               /> -->
             </td>
-        </template>
-        <template #method="{ item }">
-           <td class="py-2">
+          </template>
+          <template #method="{ item }">
+            <td class="py-2">
               <CButton color="success">
                 <nuxt-link :to="`/product/${item.id}`">
                   <CIcon :content="$options.freeSet.cilPencil" />
@@ -39,48 +46,46 @@
                 <CIcon :content="$options.freeSet.cilTrash" />
               </CButton>
             </td>
-        </template> 
-      </CDataTable>
+          </template>
+        </CDataTable>
       </CCardBody>
     </CCard>
-  </div>  
+  </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 import { freeSet } from "@coreui/icons";
-import {URL} from '../../constant/constant';
+import { URL } from "../../constant/constant";
 import swal from "sweetalert2";
 const fields = [
-    { key: 'id', label: 'ID',_style:'min-width:50px' },
-    { key: "thumb",_style:'width:100px;'},
-    { key: 'name', label: 'ProductName',_style:'min-width:100px' },
-    { key: 'desc', _style:'min-width:50px;' },
-    { key: 'price', _style:'min-width:50px;' },
-    { key: 'amount', _style:'min-width:50px;' },
-    { key: 'discount', _style:'min-width:50px;' },
-    { key: 'sale_price', _style:'min-width:50px;' },
-    { key: 'category_id', _style:'min-width:50px;' },
-    { key: "method", label: "Method", _style: "min-width:100px;" },
-]
+  { key: "id", label: "ID", _style: "min-width:50px" },
+  { key: "thumb", _style: "width:100px;" },
+  { key: "name", label: "ProductName", _style: "min-width:100px" },
+  { key: "desc", _style: "min-width:50px;" },
+  { key: "price", _style: "min-width:50px;" },
+  { key: "amount", _style: "min-width:50px;" },
+  { key: "discount", _style: "min-width:50px;" },
+  { key: "sale_price", _style: "min-width:50px;" },
+  { key: "category_id", _style: "min-width:50px;" },
+  { key: "method", label: "Method", _style: "min-width:100px;" }
+];
 export default {
-  name: 'ListRole',
+  name: "ListRole",
   freeSet,
-   props: {
-    listRoles: {
+  props: {
+    listData: {
       type: Array,
-      default: () => [],
-    },
-  },
-  data () {
-    return {
-      fields : fields ,
-      keySearch : ''
-      
+      default: () => []
     }
   },
+  data() {
+    return {
+      fields: fields,
+      keySearch: ""
+    };
+  },
   methods: {
-    deleteRole(id)
-    {
+    deleteRole(id) {
       swal
         .fire({
           title: "Are you sure?",
@@ -89,24 +94,21 @@ export default {
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
+          confirmButtonText: "Yes, delete it!"
         })
-        .then((result) => {
+        .then(result => {
           if (result.isConfirmed) {
-            axios.delete( URL +"product/" + id, {
+            axios
+              .delete(URL + "product/" + id, {
                 headers: { Authorization: this.$auth.getToken("local") }
               })
-              .then((res) => {
-              });
+              .then(res => {});
             swal.fire("Deleted!", "Your file has been deleted.", "success");
           }
         });
-    },
-    
-  },
-  
-}
+    }
+  }
+};
 </script>
 
-<style>
-</style>
+<style></style>
