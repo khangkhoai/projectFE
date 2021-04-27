@@ -57,23 +57,22 @@
         </CRow>
         <CRow>
           <CCol sm="6">
-            <label for="source">Category</label>
-            <select
-              id="category_id"
-              v-model="dataProduct.category_id"
-              class="form-control"
-            >
+          <label for="source">Category</label>
+             <select class="custom-select" v-model="dataProduct.category_id">
               <option
-                v-for="(item, index) in dataCatagory"
+                v-for="(category, index) in dataCatagory"
                 :key="index"
-                :value="item.id"
+                :value="category.id"
               >
-                {{ item.name }}
+                {{ category.name }}
               </option>
             </select>
           </CCol>
-          <CCol sm="6">
-            <CInputFile
+           <CCol sm="6">
+           <CInputFile
+              
+              id ="file"
+              name = "file"
               label="Thumb"
               v-model="dataProduct.thumb"
               placeholder="Enter your name"
@@ -103,7 +102,7 @@
 </template>
 <script>
 import swal from "sweetalert2";
-import { URL } from "../../constant/constant";
+import {URL} from '../../constant/constant';
 import axios from "axios";
 export default {
   name: "new",
@@ -118,10 +117,9 @@ export default {
         discount: "",
         category_id: "",
         desc: "",
-        amount: ""
+        amount: "",
       },
-
-      dataCatagory: []
+      dataCatagory : []
     };
   },
   props: {
@@ -136,32 +134,35 @@ export default {
       data.append("price", dataProduct.price);
       data.append("discount", dataProduct.discount);
       data.append("amount", dataProduct.amount);
-      data.append("thumb", dataProduct.thumb.target.files[0]);
-      console.log(data.get("thumb"));
-      const res = await axios.post(URL + "product/", data, {
-        headers: {
-          Authorization: this.$auth.getToken("local"),
-          "Content-type": "multipart/form-data"
-        }
-      });
-      if (res) {
-        this.$router.push("/product");
+      data.append("thumb",  dataProduct.thumb.target.files[0]);
+      console.log(data.get('thumb'))
+      const res = await axios
+        .post( URL +"product/", data,{
+          headers: {
+            Authorization: this.$auth.getToken("local"),
+            "Content-type": "multipart/form-data",
+          },
+        })
+        if(res) {
+          this.$router.push('/product')
       }
     },
     getFile(files) {
-      this.dataProduct.thumb = files;
+      this.dataProduct.thumb = files
     },
     getProductByID(id) {
+      
       axios
-        .get(URL + "product/" + id, {
-          headers: { Authorization: this.$auth.getToken("local") }
-        })
+        .get(URL +"product/" + id , {
+                headers: { Authorization: this.$auth.getToken("local") }
+              })
         .then(res => {
           this.dataProduct = res.data;
           console.log(this.dataProduct);
         });
     },
     editProduct(dataProduct) {
+      
       let data = new FormData();
       data.append("category_id", dataProduct.category_id);
       data.append("name", dataProduct.name);
@@ -170,15 +171,18 @@ export default {
       data.append("discount", dataProduct.discount);
       data.append("amount", dataProduct.amount);
       data.append("thumb", dataProduct.thumb);
-      console.log(dataProduct.name);
+      console.log(dataProduct.name)
       axios
-        .post(URL + "product/" + dataProduct.id, data, {
+        .post(
+          URL +"product/" + dataProduct.id,
+         data,{
           headers: {
             Authorization: this.$auth.getToken("local"),
-            "Content-type": "multipart/form-data"
-          }
-        })
-        .then(res => {
+            "Content-type": "multipart/form-data",
+          },
+          }   
+        )
+       .then(res => {
           this.$router.push("/product");
           swal.fire({
             position: "center",
@@ -190,20 +194,21 @@ export default {
         });
     },
     getData() {
-      axios
-        .get(URL + "category", {
-          headers: { Authorization: this.$auth.getToken("local") }
-        })
-        .then(res => {
-          this.dataCatagory = res.data;
-        });
-    }
+      axios.get(URL + "category", {
+                headers: { Authorization: this.$auth.getToken("local") }
+              }).then((res) => {
+        this.dataCatagory = res.data;
+        console.log(this.dataCatagory);
+      });
+    },
   },
   mounted() {
+    this.getData()
     if (this.$route.params.id !== null) {
       this.getProductByID(this.$route.params.id);
+      
     }
-    this.getData();
+    
   }
 };
 </script>

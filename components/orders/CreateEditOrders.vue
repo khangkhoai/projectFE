@@ -41,14 +41,10 @@
                 :key="index"
                 :value="index"
               >
-                {{ index }}
+                {{ item}}
               </option>
             </select>
-            <!-- <CInput
-              label="Date"
-              v-model="dataForm.status"
-              placeholder="Enter your name"
-            /> -->
+           
           </CCol>
         </CRow>
         <CRow>
@@ -112,8 +108,10 @@ export default {
         id: "",
         name: "",
         permission: [],
-        STATUS: DATA_STATUS
+        status : []
+        
       },
+      STATUS: DATA_STATUS,
       dataPermission: []
     };
   },

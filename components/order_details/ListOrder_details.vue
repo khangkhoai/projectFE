@@ -42,7 +42,7 @@ const fields = [
     { key: 'order_id', _style:'min-width:50px;' },
     { key: 'product_id', label: 'ProductName',_style:'min-width:150px' },
     { key: 'amount', _style:'min-width:50px;' },
-    { key: 'sub_tota', _style:'min-width:50px;' },
+    { key: 'sub_total', _style:'min-width:50px;' },
     { key: "method", label: "Method", _style: "min-width:100px;" },
 ]
 export default {
